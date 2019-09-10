@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
-                    <div class="card-title text-center">
+                    <div class="card-header">
                         <h2>{{squad.name}}</h2>
                     </div>
                     <div class="card-body">
@@ -24,22 +24,12 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h2>{{hero.name}}</h2>
+                                    <h2>{{name}}</h2>
                                 </div>
                                 <div class="card-body">
-                                    <p class="card-text">Age: {{hero.age}}</p>
-                                    <p class="card-text">Special Power: {{hero.power}}</p>
-                                    <p class="card-text">Weakness: {{hero.weakness}}</p>
-                                </div>
-                                <div class="card-footer">
-                                    <ul class="nav nav-pills card-header-pills">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="/heroes/{{hero.id}}/delete" class="btn btn-danger">Delete</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="/heroes/{{hero.id}}/edit" class="btn btn-secondary">Edit</a>
-                                        </li>
-                                    </ul>
+                                    <p class="card-text">Age: {{age}}</p>
+                                    <p class="card-text">Special Power: {{power}}</p>
+                                    <p class="card-text">Weakness: {{weakness}}</p>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +42,16 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+
+            <a class="nav-link" href="/heroes/{{squad.id}}/delete" class="btn btn-danger">Delete this squad</a>
+
+
+            <a class="nav-link" href="/heroes/{{squad.id}}/edit" class="btn btn-secondary">Edit this squad</a>
+
+        </div>
     </div>
+
 
 {{/partial}}
 {{> layout.hbs}}
