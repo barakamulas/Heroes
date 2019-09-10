@@ -131,23 +131,23 @@ public class App {
             model.put("squads", allSquads);
             return new ModelAndView(model, "hero-form.hbs");
         }, new HandlebarsTemplateEngine());
-//
-//        //Hero: process new Hero form
-//        post("/heroes", (req, res) -> { //URL to make new Hero on POST route
-//            Map<String, Object> model = new HashMap<>();
-//            List<Squad> allSquads = squadDao.getAll();
-//            model.put("squads", allSquads);
-//            String name = req.queryParams("name");
-//            int SquadId = Integer.parseInt(req.queryParams("squadId"));
-//            int age = Integer.parseInt(req.queryParams("age"));
-//            String weakness = req.queryParams("weakness");
-//            String specialPower = req.queryParams("specialPower");
-//            Hero newHero = new Hero(name, age, specialPower, weakness, SquadId);        //See what we did with the hard coded SquadId?
-//            heroDao.add(newHero);
-//            res.redirect("/heroes");
-//            return null;
-//        }, new HandlebarsTemplateEngine());
-//
+
+
+        post("/heroes/new", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Squad> allSquads = squadDao.getAll();
+            model.put("squads", allSquads);
+            String name = req.queryParams("name");
+            int SquadId = Integer.parseInt(req.queryParams("squadId"));
+            int age = Integer.parseInt(req.queryParams("age"));
+            String weakness = req.queryParams("weakness");
+            String power = req.queryParams("power");
+            Hero newHero = new Hero(name, age, power, weakness, SquadId);
+            heroDao.add(newHero);
+            res.redirect("/heroes");
+            return null;
+        }, new HandlebarsTemplateEngine());
+
 //        //get: show an individual Hero that is nested in a Squad
 //        get("/squads/:Squad_id/Heroes/:hero_id", (req, res) -> {
 //            Map<String, Object> model = new HashMap<>();

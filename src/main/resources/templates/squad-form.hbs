@@ -1,39 +1,51 @@
 {{#partial "content"}}
     <div class="container">
     {{#if editSquad}}
-        <h3>Edit this squad!</h3>
-        <form action="/squads/{{squad.id}}" method="post">
-            <div class="form-group">
-                <label for="name">Edit this squad's name</label>
-                <input id="newName" name="newName" type="text" class="form-control" value="{{squad.name}}">
+        <div class="card">
+            <div class="card-title">
+                <h3>Edit this squad!</h3>
             </div>
-            <div class="form-group">
-                <label for="size">Edit this squad's name</label>
-                <input id="newMaxSize" name="newMaxSize" type="number" class="form-control"  value="{{squad.size}}">
+            <div class="card-body">
+                <form action="/squads/{{squad.id}}" method="post">
+                    <div class="form-group">
+                        <label for="name">Edit this squad's name</label>
+                        <input id="newName" name="newName" type="text" class="form-control" value="{{squad.name}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="size">Edit this squad's name</label>
+                        <input id="newMaxSize" name="newMaxSize" type="number" class="form-control"  value="{{squad.size}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="cause">Edit this squad's name</label>
+                        <input id="newCause" name="newCause" type="text" class="form-control"  value="{{squad.cause}}">
+                    </div>
+                    <button type="submit" class="btn btn-default">Go!</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="cause">Edit this squad's name</label>
-                <input id="newCause" name="newCause" type="text" class="form-control"  value="{{squad.cause}}">
-            </div>
-            <button type="submit" class="btn btn-default">Go!</button>
-        </form>
+        </div>
     {{else}}
-        <h3>Add a new squad!</h3>
-        <form action="/squads/new" method="post">
-            <div class="form-group">
-                <label for="name">Squad Name</label>
-                <input id="name" name="name" class="form-control" type="text" >
+        <div class="card">
+            <div class="card-title">
+                <h3>Add a new squad!</h3>
             </div>
-            <div class="form-group">
-                <label for="size">Max Size</label>
-                <input id="size" name="size" type="number" class="form-control"  >
+            <div class="card-body">
+                <form action="/squads/new" method="post">
+                    <div class="form-group">
+                        <label for="name">Squad Name</label>
+                        <input id="name" name="name" class="form-control" type="text" >
+                    </div>
+                    <div class="form-group">
+                        <label for="size">Max Size</label>
+                        <input id="size" name="size" type="number" class="form-control"  >
+                    </div>
+                    <div class="form-group">
+                        <label for="cause">Cause</label>
+                        <input id="cause" name="cause" type="text" class="form-control" >
+                    </div>
+                    <button type="submit" class="btn btn-default">Go!</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="cause">Cause</label>
-                <input id="cause" name="cause" type="text" class="form-control" >
-            </div>
-            <button type="submit" class="btn btn-default">Go!</button>
-        </form>
+        </div>
     {{/if}}
     </div>
 {{/partial}}
