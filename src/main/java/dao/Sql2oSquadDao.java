@@ -1,5 +1,6 @@
 package dao;
 
+import models.Hero;
 import models.Squad;
 import org.sql2o.*;
 import java.util.List;
@@ -79,6 +80,15 @@ public class Sql2oSquadDao implements SquadDao {
                     .executeUpdate();
         } catch (Sql2oException ex){
             System.out.println(ex);
+        }
+    }
+
+    @Override
+    public List<Hero> getAllHeroesBySquad(int squadId) {
+        try(Connection con = sql2o.open()){
+            return con.createQuery("SELECT * FROM heroes WHERE squadId = :squadId")
+                    .addParameter("squad_id", squadId)
+                    .executeAndFetch(Hero.class);
         }
     }
 

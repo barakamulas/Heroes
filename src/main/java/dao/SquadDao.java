@@ -1,5 +1,6 @@
 package dao;
 
+import models.Hero;
 import models.Squad;
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface SquadDao {
     void deleteById(int id);
 
     void clearAllSquads();
+
+    List<Hero> getAllHeroesBySquad(int squadId);
 }

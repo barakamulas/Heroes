@@ -61,18 +61,18 @@ public class App {
             res.redirect("/squads");
             return null;
         }, new HandlebarsTemplateEngine());
-//
-//
-//        //get: delete all squads and all Heroes
-//        get("/squads/delete", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            squadDao.clearAll();
-//            res.redirect("/squads");
-//            return null;
-//        }, new HandlebarsTemplateEngine());
-//
-//
-//
+
+
+
+        get("/squads/delete", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            squadDao.clearAllSquads();
+            res.redirect("/squads");
+            return null;
+        }, new HandlebarsTemplateEngine());
+
+
+
 //        //get: delete all Heroes
 //        get("/heroes/delete", (req, res) -> {
 //            Map<String, Object> model = new HashMap<>();
@@ -124,13 +124,13 @@ public class App {
 //            return null;
 //        }, new HandlebarsTemplateEngine());
 //
-//        //get: show new Hero form
-//        get("/heroes/new", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            List<Squad> allSquads = squadDao.getAll();
-//            model.put("squads", allSquads);
-//            return new ModelAndView(model, "hero-form.hbs");
-//        }, new HandlebarsTemplateEngine());
+
+        get("/heroes/new", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Squad> allSquads = squadDao.getAll();
+            model.put("squads", allSquads);
+            return new ModelAndView(model, "hero-form.hbs");
+        }, new HandlebarsTemplateEngine());
 //
 //        //Hero: process new Hero form
 //        post("/heroes", (req, res) -> { //URL to make new Hero on POST route
