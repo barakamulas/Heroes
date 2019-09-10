@@ -72,15 +72,13 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
 
+        get("/heroes/delete", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            heroDao.clearAllHeroes();
+            res.redirect("/heroes");
+            return null;
+        }, new HandlebarsTemplateEngine());
 
-//        //get: delete all Heroes
-//        get("/heroes/delete", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            heroDao.clearAll();
-//            res.redirect("/heroes");
-//            return null;
-//        }, new HandlebarsTemplateEngine());
-//
 //        //get a specific Squad (and the Heroes it contains)
 //        get("/squads/:id", (req, res) -> {
 //            Map<String, Object> model = new HashMap<>();
