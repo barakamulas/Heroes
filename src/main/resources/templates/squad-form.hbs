@@ -1,20 +1,20 @@
 {{#partial "content"}}
+    <div class="container">
     {{#if editSquad}}
-        <h3>Edit this category!</h3>
+        <h3>Edit this squad!</h3>
         <form action="/squads/{{squad.id}}" method="post">
             <div class="form-group">
-                <label for="newSquadName">Edit this squad's name</label>
-                <input id="newSquadName" name="newSquadName" type="text" class="form-control" value="{{squad.name}}">
+                <label for="name">Edit this squad's name</label>
+                <input id="newName" name="newName" type="text" class="form-control" value="{{squad.name}}">
             </div>
             <div class="form-group">
-                <label for="newMaxSize">Edit this squad's name</label>
-                <input id="newMaxSize" name="newMaxSize" type="number" class="form-control"  value="{{squad.maxSize}}">
+                <label for="size">Edit this squad's name</label>
+                <input id="newMaxSize" name="newMaxSize" type="number" class="form-control"  value="{{squad.size}}">
             </div>
             <div class="form-group">
-                <label for="newCause">Edit this squad's name</label>
+                <label for="cause">Edit this squad's name</label>
                 <input id="newCause" name="newCause" type="text" class="form-control"  value="{{squad.cause}}">
             </div>
-
             <button type="submit" class="btn btn-default">Go!</button>
         </form>
     {{else}}
@@ -24,22 +24,18 @@
                 <label for="name">Squad Name</label>
                 <input id="name" name="name" class="form-control" type="text" >
             </div>
-
             <div class="form-group">
-                <label for="maxSize">Max Size</label>
-                <input id="maxSize" name="maxSize" type="number" class="form-control"  >
+                <label for="size">Max Size</label>
+                <input id="size" name="size" type="number" class="form-control"  >
             </div>
-
             <div class="form-group">
                 <label for="cause">Cause</label>
                 <input id="cause" name="cause" type="text" class="form-control" >
             </div>
-
-
             <button type="submit" class="btn btn-default">Go!</button>
         </form>
-
     {{/if}}
+    </div>
 {{/partial}}
 
 {{> layout.hbs}}

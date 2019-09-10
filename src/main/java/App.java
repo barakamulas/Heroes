@@ -42,25 +42,25 @@ public class App {
             return new ModelAndView(model, "all-squads.hbs");
         }, new HandlebarsTemplateEngine());
 
-        //get: show a form to create a new Squad
+
         get("/squads/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            List<Squad> squads = squadDao.getAll(); //refresh list of links for navbar
+            List<Squad> squads = squadDao.getAll();
             model.put("squads", squads);
-            return new ModelAndView(model, "squad-form.hbs"); //new layout
+            return new ModelAndView(model, "squad-form.hbs");
         }, new HandlebarsTemplateEngine());
 
-//        //post: process a form to create a new Squad
-//        post("/squads/new", (req, res) -> { //new
-//            Map<String, Object> model = new HashMap<>();
-//            String name = req.queryParams("name");
-//            int maxSize = Integer.parseInt(req.params("id"));
-//            String cause = req.queryParams("cause");
-//            Squad newSquad = new Squad(name,maxSize,cause);
-//            squadDao.add(newSquad);
-//            res.redirect("/squads");
-//            return null;
-//        }, new HandlebarsTemplateEngine());
+
+        post("/squads/new", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            String name = req.queryParams("name");
+            int maxSize = Integer.parseInt(req.queryParams("size"));
+            String cause = req.queryParams("cause");
+            Squad newSquad = new Squad(name,maxSize,cause);
+            squadDao.add(newSquad);
+            res.redirect("/squads");
+            return null;
+        }, new HandlebarsTemplateEngine());
 //
 //
 //        //get: delete all squads and all Heroes
