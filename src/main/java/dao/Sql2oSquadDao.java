@@ -87,7 +87,7 @@ public class Sql2oSquadDao implements SquadDao {
     public List<Hero> getAllHeroesBySquad(int squadId) {
         try(Connection con = sql2o.open()){
             return con.createQuery("SELECT * FROM heroes WHERE squadId = :squadId")
-                    .addParameter("squad_id", squadId)
+                    .addParameter("squadId", squadId)
                     .executeAndFetch(Hero.class);
         }
     }

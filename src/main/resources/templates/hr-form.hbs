@@ -1,0 +1,84 @@
+{{#partial "content"}}
+    <div class="container">
+        {{#if editHero}}
+            <div class="card">
+                <div class="card-title">
+                    <h3>Edit Hero</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/heroes/{{editHero.id}}/update" method="post">
+                        <div class="form-group">
+                            <label for="name">Edit this hero's name</label>
+                            <input id="newName" name="name" class="form-control" type="text" value="{{editHero.name}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="age">Edit this hero's age</label>
+                            <input id="newAge" name="newAge" type="number" class="form-control"  value="{{editHero.age}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="power">Edit this hero's special power</label>
+                            <input id="newPower" name="newPower" class="form-control"  type="text" value="{{editHero.power}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="weakness">Edit this hero's weakness</label>
+                            <input id="newWeakness" name="newWeakness" type="text" class="form-control"  value="{{editHero.weakness}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="squadId">Edit this hero's squad</label>
+                            <select id="newSquadId" name="newSquadId" class="form-control">
+                                {{#each squads}}
+                                    <option value="{{id}}">{{name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-default">Go!</button>
+                    </form>
+                </div>
+            </div>
+
+        {{else}}
+            <div class="card">
+                <div class="card-title">
+                    <h3>Add Hero</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/heroes/new" method="post">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input id="name" name="name" class="form-control" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input id="age" name="age" class="form-control" type="number">
+                        </div>
+                        <div class="form-group">
+                            <label for="power">Special Power</label>
+                            <input id="power" name="power" class="form-control"  type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="weakness">Weakness</label>
+                            <input id="weakness" name="weakness" class="form-control" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="squadId">squad</label>
+                            <select id="squadId" name="squadId" class="form-control">
+                                {{#each squads}}
+                                    <option value="{{id}}">{{name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-default">Go!</button>
+                    </form>
+                </div>
+            </div>
+        {{/if}}
+    </div>
+
+
+{{/partial}}
+
+{{> layout.hbs}}

@@ -81,14 +81,25 @@ public class App {
 
         get("/squads/:id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            int idOfSquadToFind = Integer.parseInt(req.params("id")); //new
+            int idOfSquadToFind = Integer.parseInt(req.params("id"));
             Squad foundSquad = squadDao.findById(idOfSquadToFind);
-            model.put("Squad", foundSquad);
+            model.put("squad", foundSquad);
             List<Hero> allHeroesBySquad = squadDao.getAllHeroesBySquad(idOfSquadToFind);
             model.put("heroes", allHeroesBySquad);
-            model.put("squads", squadDao.getAll()); //refresh list of links for navbar
-            return new ModelAndView(model, "squad-detail.hbs"); //new
+            model.put("squads", squadDao.getAll());
+            return new ModelAndView(model, "squad-detail.hbs");
         }, new HandlebarsTemplateEngine());
+
+
+//        get("/heroes/:id", (req, res) -> {
+//            Map<String, Object> model = new HashMap<>();
+//            int idOfHeroToFind = Integer.parseInt(req.params("id"));
+//            Hero foundHero = heroDao.findById(idOfHeroToFind);
+//            model.put("hero", foundHero);
+//            model.put("heroes", heroDao.getAll());
+//            return new ModelAndView(model, "hero-detail.hbs");
+//        }, new HandlebarsTemplateEngine());
+
 
 //        //get: show a form to update a Squad
 //        get("/squads/:id/edit", (req, res) -> {
@@ -124,16 +135,18 @@ public class App {
 
         get("/heroes/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            List<Squad> allSquads = squadDao.getAll();
-            model.put("squads", allSquads);
-            return new ModelAndView(model, "hero-form.hbs");
+            List<Hero> heroes = heroDao.getAll();
+            List<Squad> squads = squadDao.getAll();
+            model.put("heroes", heroes);
+            model.put("squads", squads);
+            return new ModelAndView(model, "hr-form.hbs");
         }, new HandlebarsTemplateEngine());
 
 
         post("/heroes/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            List<Squad> allSquads = squadDao.getAll();
-            model.put("squads", allSquads);
+            List<Hero> heroes = heroDao.getAll();
+            model.put("heroes", heroes);
             String name = req.queryParams("name");
             int SquadId = Integer.parseInt(req.queryParams("squadId"));
             int age = Integer.parseInt(req.queryParams("age"));
