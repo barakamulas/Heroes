@@ -41,15 +41,15 @@ public class App {
             model.put("squads", allSquads);
             return new ModelAndView(model, "all-squads.hbs");
         }, new HandlebarsTemplateEngine());
-//
-//        //get: show a form to create a new Squad
-//        get("/squads/new", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            List<Squad> squads = squadDao.getAll(); //refresh list of links for navbar
-//            model.put("squads", squads);
-//            return new ModelAndView(model, "squad-form.hbs"); //new layout
-//        }, new HandlebarsTemplateEngine());
-//
+
+        //get: show a form to create a new Squad
+        get("/squads/new", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Squad> squads = squadDao.getAll(); //refresh list of links for navbar
+            model.put("squads", squads);
+            return new ModelAndView(model, "squad-form.hbs"); //new layout
+        }, new HandlebarsTemplateEngine());
+
 //        //post: process a form to create a new Squad
 //        post("/squads/new", (req, res) -> { //new
 //            Map<String, Object> model = new HashMap<>();
