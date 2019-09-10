@@ -63,7 +63,6 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
 
-
         get("/squads/delete", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             squadDao.clearAllSquads();
@@ -79,18 +78,18 @@ public class App {
             return null;
         }, new HandlebarsTemplateEngine());
 
-//        //get a specific Squad (and the Heroes it contains)
-//        get("/squads/:id", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            int idOfSquadToFind = Integer.parseInt(req.params("id")); //new
-//            Squad foundSquad = squadDao.findById(idOfSquadToFind);
-//            model.put("Squad", foundSquad);
-//            List<Hero> allHeroesBySquad = squadDao.getAllHeroesBySquad(idOfSquadToFind);
-//            model.put("heroes", allHeroesBySquad);
-//            model.put("squads", squadDao.getAll()); //refresh list of links for navbar
-//            return new ModelAndView(model, "squad-detail.hbs"); //new
-//        }, new HandlebarsTemplateEngine());
-//
+
+        get("/squads/:id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfSquadToFind = Integer.parseInt(req.params("id")); //new
+            Squad foundSquad = squadDao.findById(idOfSquadToFind);
+            model.put("Squad", foundSquad);
+            List<Hero> allHeroesBySquad = squadDao.getAllHeroesBySquad(idOfSquadToFind);
+            model.put("heroes", allHeroesBySquad);
+            model.put("squads", squadDao.getAll()); //refresh list of links for navbar
+            return new ModelAndView(model, "squad-detail.hbs"); //new
+        }, new HandlebarsTemplateEngine());
+
 //        //get: show a form to update a Squad
 //        get("/squads/:id/edit", (req, res) -> {
 //            Map<String, Object> model = new HashMap<>();
