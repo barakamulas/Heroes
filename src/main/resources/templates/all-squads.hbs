@@ -1,0 +1,38 @@
+{{#partial "content"}}
+
+    {{#if squads}}
+    <div class="container-fluid">
+        <div class="row">
+            <h1>Heroes</h1>
+            <table class="table table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">link to Details</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each squads}}
+                    <tr>
+                        <td>{{name}}</td>
+                        <td><a href="/squads/{{id}}" class="btn btn-secondary">Details</a></td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+            <a href="/squads/delete" class="btn btn-danger">Delete all squads</a><br>
+        </div>
+    </div>
+    {{else}}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="jumbotron" width="100%">
+                    <h1>No Squads Found</h1>
+                </div>
+            </div>
+        </div>
+
+    {{/if}}
+{{/partial}}
+
+{{> layout.hbs}}
