@@ -34,13 +34,13 @@ public class App {
             model.put("heroes", heroes);
             return new ModelAndView(model, "all-heroes.hbs");
         }, new HandlebarsTemplateEngine());
-//
-//        get("/squads", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            List<Squad> allSquads = squadDao.getAll();
-//            model.put("squads", allSquads);
-//            return new ModelAndView(model, "all-squads.hbs");
-//        }, new HandlebarsTemplateEngine());
+
+        get("/squads", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Squad> allSquads = squadDao.getAll();
+            model.put("squads", allSquads);
+            return new ModelAndView(model, "all-squads.hbs");
+        }, new HandlebarsTemplateEngine());
 //
 //        //get: show a form to create a new Squad
 //        get("/squads/new", (req, res) -> {
