@@ -4,13 +4,20 @@ import java.util.Objects;
 
 public class Hero {
 
-
     private int id;
     private String name;
     private int age;
-    private String specialPower;
+    private String power;
     private String weakness;
     private int squadId;
+
+    public Hero(String name, int age, String power, String weakness, int squadId) {
+        this.name = name;
+        this.age = age;
+        this.power = power;
+        this.weakness = weakness;
+        this.squadId = squadId;
+    }
 
     public int getId() {
         return id;
@@ -36,12 +43,12 @@ public class Hero {
         this.age = age;
     }
 
-    public String getSpecialPower() {
-        return specialPower;
+    public String getPower() {
+        return power;
     }
 
-    public void setSpecialPower(String specialPower) {
-        this.specialPower = specialPower;
+    public void setPower(String power) {
+        this.power = power;
     }
 
     public String getWeakness() {
@@ -56,6 +63,10 @@ public class Hero {
         return squadId;
     }
 
+    public void setSquadId(int squadId) {
+        this.squadId = squadId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,25 +75,13 @@ public class Hero {
         return getAge() == hero.getAge() &&
                 getSquadId() == hero.getSquadId() &&
                 getName().equals(hero.getName()) &&
-                getSpecialPower().equals(hero.getSpecialPower()) &&
+                getPower().equals(hero.getPower()) &&
                 getWeakness().equals(hero.getWeakness());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getAge(), getSpecialPower(), getWeakness(), getSquadId());
-    }
-
-    public void setSquadId(int squadId) {
-        this.squadId = squadId;
-    }
-
-    public Hero(String name, int age, String specialPower, String weakness, int squadId) {
-        this.name = name;
-        this.age = age;
-        this.specialPower = specialPower;
-        this.weakness = weakness;
-        this.squadId = squadId;
+        return Objects.hash(getName(), getAge(), getPower(), getWeakness(), getSquadId());
     }
 }
 

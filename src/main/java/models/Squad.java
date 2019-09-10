@@ -7,8 +7,15 @@ public class Squad {
 
     private String name;
     private String cause;
-    private int maxSize;
+    private int size;
     private int id;
+
+    public Squad(String name, int size, String cause) {
+        this.name = name;
+        this.size = size;
+        this.cause = cause;
+
+    }
 
 
     public String getName() {
@@ -27,27 +34,12 @@ public class Squad {
         this.cause = cause;
     }
 
-    public int getMaxSize() {
-        return maxSize;
+    public int getSize() {
+        return size;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Squad squad = (Squad) o;
-        return getMaxSize() == squad.getMaxSize() &&
-                getName().equals(squad.getName()) &&
-                getCause().equals(squad.getCause());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getCause(), getMaxSize());
-    }
-
-    public void setMaxSize(int maxSize) {
-        this.maxSize = maxSize;
+    public void setSize(int size) {
+        this.size = size;
     }
 
     public int getId() {
@@ -58,10 +50,21 @@ public class Squad {
         this.id = id;
     }
 
-    public Squad(String name, int maxSize, String cause) {
-        this.name = name;
-        this.cause = cause;
-        this.maxSize = maxSize;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Squad squad = (Squad) o;
+        return getSize() == squad.getSize() &&
+                getName().equals(squad.getName()) &&
+                getCause().equals(squad.getCause());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getCause(), getSize());
     }
 
 

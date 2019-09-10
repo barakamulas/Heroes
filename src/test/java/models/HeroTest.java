@@ -38,9 +38,9 @@ public class HeroTest {
     }
 
     @Test
-    public void HeroInstantiatesWithSpecialPower_metalClaws() throws Exception {
+    public void HeroInstantiatesWithPower_metalClaws() throws Exception {
         Hero hero = setUpNewHero();
-        assertEquals("Metal Claws", hero.getSpecialPower());
+        assertEquals("Metal Claws", hero.getPower());
     }
 
 

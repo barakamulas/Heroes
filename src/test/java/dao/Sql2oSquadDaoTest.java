@@ -22,17 +22,18 @@ public class Sql2oSquadDaoTest {
     @Test
     public void existingSquadsCanBeFoundById() throws Exception {
         Squad squad = setUpNewSquad();
-        squadDao.add(squad); //add to dao (takes care of saving)
-        Squad foundSquad = squadDao.findById(squad.getId()); //retrieve
-        assertEquals(squad, foundSquad); //should be the same
+        squadDao.add(squad);
+        Squad foundSquad = squadDao.findById(squad.getId());
+        assertEquals(squad, foundSquad);
     }
 
     @Test
     public void existingSquadCanBeUpdated() throws Exception {
         Squad squad = setUpNewSquad();
         squadDao.add(squad);
+        squadDao.update(squad.getId(),"Marvel",14,"fighting Aliens");
         Squad foundSquad = squadDao.findById(squad.getId());
-        assertEquals(squad, foundSquad);
+        assertNotEquals(squad, foundSquad);
     }
 
     @Test
@@ -46,9 +47,12 @@ public class Sql2oSquadDaoTest {
     @Test
     public void AllExistingSquadsCanBeDeleted() throws Exception {
         Squad squad = setUpNewSquad();
-        squadDao.add(squad); //add to dao (takes care of saving)
-        Squad foundSquad = squadDao.findById(squad.getId()); //retrieve
-        assertEquals(squad, foundSquad); //should be the same
+        Squad otherSquad = setUpNewSquad();
+        squadDao.add(squad);
+        squadDao.clearAllSquads();
+        assertFalse(squadDao.getAll().contains(squad));
+        assertFalse(squadDao.getAll().contains(otherSquad));
+        assertEquals(0,squadDao.getAll().size());
     }
 
     @Before
@@ -65,6 +69,6 @@ public class Sql2oSquadDaoTest {
     }
 
     public Squad setUpNewSquad(){
-        return new Squad("X-me",45,"Fighting Mutants");
+        return new Squad("X-men",45,"Fighting Mutants");
     }
 }

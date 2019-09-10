@@ -20,7 +20,7 @@ public class Sql2oHeroDaoTest {
     }
 
     @Test
-    public void existingHerosCanBeFoundById() throws Exception {
+    public void existingHeroesCanBeFoundById() throws Exception {
         Hero hero = setUpNewHero();
         heroDao.add(hero); //add to dao (takes care of saving)
         Hero foundHero = heroDao.findById(hero.getId()); //retrieve
@@ -44,11 +44,11 @@ public class Sql2oHeroDaoTest {
     }
 
     @Test
-    public void AllExistingHerosCanBeDeleted() throws Exception {
+    public void AllExistingHeroesCanBeDeleted() throws Exception {
         Hero hero = setUpNewHero();
-        heroDao.add(hero); //add to dao (takes care of saving)
-        Hero foundHero = heroDao.findById(hero.getId()); //retrieve
-        assertEquals(hero, foundHero); //should be the same
+        heroDao.add(hero);
+        heroDao.deleteById(hero.getId());
+        assertEquals(false, heroDao.getAll().contains(hero));
     }
 
     @Before

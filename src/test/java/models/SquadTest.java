@@ -31,9 +31,9 @@ public class SquadTest {
     }
 
     @Test
-    public void squadInstantiateWithMaxSize_12() throws Exception {
+    public void squadInstantiateWithSize_12() throws Exception {
         Squad squad = setupNewSquad();
-        assertEquals(12, squad.getMaxSize());
+        assertEquals(12, squad.getSize());
     }
 
     @Test

@@ -16,7 +16,7 @@ public interface SquadDao {
     Squad findById(int id);
 
 
-    void update(int id, String content);
+    void update(int id, String name, int size, String cause);
 
 
     void deleteById(int id);
