@@ -32,6 +32,21 @@ public class Squad {
         return maxSize;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Squad squad = (Squad) o;
+        return getMaxSize() == squad.getMaxSize() &&
+                getName().equals(squad.getName()) &&
+                getCause().equals(squad.getCause());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getCause(), getMaxSize());
+    }
+
     public void setMaxSize(int maxSize) {
         this.maxSize = maxSize;
     }
