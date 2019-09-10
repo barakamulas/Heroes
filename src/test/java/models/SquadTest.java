@@ -24,7 +24,6 @@ public class SquadTest {
 
     }
 
-
     @Test
     public void squadInstantiateWithName_XMen() throws Exception {
         Squad squad = setupNewSquad();
@@ -42,8 +41,6 @@ public class SquadTest {
         Squad squad = setupNewSquad();
         assertEquals("Fighting Crime", squad.getCause());
     }
-
-
 
     public Squad setupNewSquad(){
         return new Squad("X-Men",12,"Fighting Crime");
