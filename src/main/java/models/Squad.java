@@ -1,7 +1,6 @@
 package models;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 import java.util.Objects;
 
 public class Squad {
@@ -59,7 +58,7 @@ public class Squad {
         this.id = id;
     }
 
-    public Squad(String name, String cause, int maxSize) {
+    public Squad(String name, int maxSize, String cause) {
         this.name = name;
         this.cause = cause;
         this.maxSize = maxSize;
