@@ -17,7 +17,7 @@ public class App {
     public static void main(String[] args) {
 
         staticFileLocation("/public");
-        String connectionString = "jdbc:h2:~/todolist.db;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
+        String connectionString = "jdbc:h2:~/hero-squad.db;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         Sql2oHeroDao heroDao = new Sql2oHeroDao(sql2o);
         Sql2oSquadDao squadDao = new Sql2oSquadDao(sql2o);
@@ -28,12 +28,12 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
 
-//        get("/heroes", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            List<Hero> heroes = heroDao.getAll();
-//            model.put("heroes", heroes);
-//            return new ModelAndView(model, "all-heroes.hbs");
-//        }, new HandlebarsTemplateEngine());
+        get("/heroes", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Hero> heroes = heroDao.getAll();
+            model.put("heroes", heroes);
+            return new ModelAndView(model, "all-heroes.hbs");
+        }, new HandlebarsTemplateEngine());
 //
 //        get("/squads", (req, res) -> {
 //            Map<String, Object> model = new HashMap<>();

@@ -1,37 +1,41 @@
 {{#partial "content"}}
 
-    <h1>Heroes</h1>
 
+    {{#if heroes}}
     <div class="container-fluid">
         <div class="row">
-            {{#if heroes}}
-                <table class="table table-dark">
-                    <thead>
+            <h2>Heroes</h2>
+            <table class="table table-dark">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">link to Details</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each heroes}}
                     <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">link to Details</th>
+                        <td>{{name}}</td>
+                        <td><a href="/heroes/{{id}}" class="btn btn-secondary">Details</a></td>
                     </tr>
-                    </thead>
-                    <tbody>
-                    {{#each heroes}}
-                        <tr>
-                            <td>{{name}}</td>
-                            <td><a href="/heroes/{{id}}" class="btn btn-secondary">Details</a></td>
-                        </tr>
-                    {{/each}}
-                    </tbody>
-                </table>
-                <a href="/heroes/delete" class="btn btn-danger">Delete all heroes</a><br>
-
-            {{else}}
-
-                <div class="jumbotron" width="100%">
-                    <h1>No Heroes Found</h1>
-                </div>
-
-            {{/if}}
+                {{/each}}
+                </tbody>
+            </table>
+            <a href="/heroes/delete" class="btn btn-danger">Delete all heroes</a><br>
         </div>
     </div>
+
+    {{else}}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="jumbotron">
+                <h1>No Heroes Found</h1>
+            </div>
+        </div>
+    </div>
+
+
+    {{/if}}
 {{/partial}}
 
 {{> layout.hbs}}
