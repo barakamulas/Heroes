@@ -12,11 +12,18 @@ public class Sql2oSquadDaoTest {
 
 
     @Test
-    public void addingCourseSetsId() throws Exception {
+    public void addingSquadSetsId() throws Exception {
         Squad squad = setUpNewSquad();
         int originalSquadId = squad.getId();
         squadDao.add(squad);
         assertNotEquals(originalSquadId, squad.getId());
+    }
+
+    @Test
+    public void aSquadIsSuccessfullyAdded() throws Exception {
+        Squad squad = setUpNewSquad();
+        squadDao.add(squad);
+        assertTrue(squadDao.getAll().contains(squad));
     }
 
     @Test

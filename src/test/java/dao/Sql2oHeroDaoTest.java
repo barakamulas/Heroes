@@ -12,7 +12,7 @@ public class Sql2oHeroDaoTest {
 
 
     @Test
-    public void addingCourseSetsId() throws Exception {
+    public void addingHeroSetsId() throws Exception {
         Hero hero = setUpNewHero();
         int originalHeroId = hero.getId();
         heroDao.add(hero);
@@ -20,15 +20,14 @@ public class Sql2oHeroDaoTest {
     }
 
     @Test
-    public void existingHeroesCanBeFoundById() throws Exception {
+    public void aHeroIsSuccessfullyAdded() throws Exception {
         Hero hero = setUpNewHero();
-        heroDao.add(hero); //add to dao (takes care of saving)
-        Hero foundHero = heroDao.findById(hero.getId()); //retrieve
-        assertEquals(hero, foundHero); //should be the same
+        heroDao.add(hero);
+        assertTrue(heroDao.getAll().contains(hero));
     }
 
     @Test
-    public void existingHeroCanBeUpdated() throws Exception {
+    public void existingHeroesCanBeFoundById() throws Exception {
         Hero hero = setUpNewHero();
         heroDao.add(hero);
         Hero foundHero = heroDao.findById(hero.getId());
@@ -36,19 +35,32 @@ public class Sql2oHeroDaoTest {
     }
 
     @Test
+    public void existingHeroCanBeUpdated() throws Exception {
+        Hero hero = setUpNewHero();
+        heroDao.add(hero);
+        heroDao.update(hero.getId(),"Superman",33,"Invincibility","Kryptonite",2);
+        Hero foundHero = heroDao.findById(hero.getId());
+        assertNotEquals(hero, foundHero);
+    }
+
+    @Test
     public void existingHeroCanBeDeleted() throws Exception {
         Hero hero = setUpNewHero();
         heroDao.add(hero);
         heroDao.deleteById(hero.getId());
-        assertEquals(0, heroDao.getAll().size());
+        assertFalse(heroDao.getAll().contains(hero));
     }
 
     @Test
     public void AllExistingHeroesCanBeDeleted() throws Exception {
         Hero hero = setUpNewHero();
+        Hero otherHero = setUpNewHero();
         heroDao.add(hero);
-        heroDao.deleteById(hero.getId());
-        assertEquals(false, heroDao.getAll().contains(hero));
+        heroDao.add(otherHero);
+        heroDao.clearAllHeroes();
+        assertFalse(heroDao.getAll().contains(hero));
+        assertFalse(heroDao.getAll().contains(otherHero));
+        assertEquals(0,heroDao.getAll().size());
     }
 
     @Before
