@@ -8,15 +8,15 @@
             <div class="card-body">
                 <form action="/squads/{{squad.id}}" method="post">
                     <div class="form-group">
-                        <label for="name">Edit this squad's name</label>
+                        <label for="newName">Edit this squad's name</label>
                         <input id="newName" name="newName" type="text" class="form-control" value="{{squad.name}}">
                     </div>
                     <div class="form-group">
-                        <label for="size">Edit this squad's name</label>
-                        <input id="newMaxSize" name="newMaxSize" type="number" class="form-control"  value="{{squad.size}}">
+                        <label for="newSize">Edit this squad's size</label>
+                        <input id="newSize" name="newSize" type="number" class="form-control"  value="{{squad.size}}">
                     </div>
                     <div class="form-group">
-                        <label for="cause">Edit this squad's name</label>
+                        <label for="newCause">Edit this squad's cause</label>
                         <input id="newCause" name="newCause" type="text" class="form-control"  value="{{squad.cause}}">
                     </div>
                     <button type="submit" class="btn btn-default">Go!</button>

@@ -24,6 +24,10 @@ public class App {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            List<Squad> squads = squadDao.getAll();
+            List<Hero> heroes = heroDao.getAll();
+            model.put("squads", squads);
+            model.put("heroes", heroes);
             return new ModelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
 
@@ -90,18 +94,6 @@ public class App {
             return new ModelAndView(model, "squad-detail.hbs");
         }, new HandlebarsTemplateEngine());
 
-
-        get("/heroes/:id", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            int idOfHeroToFind = Integer.parseInt(req.params("id"));
-            Hero foundHero = heroDao.findById(idOfHeroToFind);
-            model.put("hero", foundHero);
-            model.put("heroes", heroDao.getAll());
-            return new ModelAndView(model, "hero-detail.hbs");
-        }, new HandlebarsTemplateEngine());
-
-
-
         get("/squads/:id/edit", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("editSquad", true);
@@ -115,15 +107,15 @@ public class App {
         post("/squads/:id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfSquadToEdit = Integer.parseInt(req.params("id"));
-            String newName = req.queryParams("newSquadName");
-            int newMaxSize = Integer.parseInt(req.params("newMaxSize"));
+            String newName = req.queryParams("newName");
+            int newMaxSize = Integer.parseInt(req.queryParams("newSize"));
             String newCause = req.queryParams("newCause");
             squadDao.update(idOfSquadToEdit, newName,newMaxSize,newCause);
-            res.redirect("/squads/:id");
+            res.redirect("/squads");
             return null;
         }, new HandlebarsTemplateEngine());
 
-//        //get: delete an individual Hero
+
 //        get("/heroes/:hero_id/delete", (req, res) -> {
 //            Map<String, Object> model = new HashMap<>();
 //            int idOfHeroToDelete = Integer.parseInt(req.params("id"));
@@ -141,6 +133,16 @@ public class App {
             model.put("squads", squads);
             return new ModelAndView(model, "hr-form.hbs");
         }, new HandlebarsTemplateEngine());
+
+        get("/heroes/:id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfHeroToFind = Integer.parseInt(req.params("id"));
+            Hero foundHero = heroDao.findById(idOfHeroToFind);
+            model.put("hero", foundHero);
+            model.put("heroes", heroDao.getAll());
+            return new ModelAndView(model, "hero-detail.hbs");
+        }, new HandlebarsTemplateEngine());
+
 
 
         post("/heroes/new", (req, res) -> {
@@ -171,16 +173,16 @@ public class App {
 //            return new ModelAndView(model, "hero-detail.hbs"); //individual Hero page.
 //        }, new HandlebarsTemplateEngine());
 //
-//        //get: show a form to update a Hero
-//        get("/Heroes/:id/edit", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            List<Squad> allSquads = squadDao.getAll();
-//            model.put("squads", allSquads);
-//            Hero hero = heroDao.findById(Integer.parseInt(req.params("id")));
-//            model.put("hero", hero);
-//            model.put("editHero", true);
-//            return new ModelAndView(model, "hero-form.hbs");
-//        }, new HandlebarsTemplateEngine());
+
+        get("/heroes/:id/edit", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            List<Squad> allSquads = squadDao.getAll();
+            model.put("squads", allSquads);
+            Hero hero = heroDao.findById(Integer.parseInt(req.params("id")));
+            model.put("hero", hero);
+            model.put("editHero", true);
+            return new ModelAndView(model, "hr-form.hbs");
+        }, new HandlebarsTemplateEngine());
 //
 //        //Hero: process a form to update a Hero
 //        post("/heroes/:id", (req, res) -> { //URL to update Hero on POST route
