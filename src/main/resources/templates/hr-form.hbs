@@ -6,29 +6,29 @@
                     <h3>Edit Hero</h3>
                 </div>
                 <div class="card-body">
-                    <form action="/heroes/{{hero.id}}/update" method="post">
+                    <form action="/heroes/{{hero.id}}" method="post">
                         <div class="form-group">
-                            <label for="name">Edit this hero's name</label>
-                            <input id="newName" name="name" class="form-control" type="text" value="{{hero.name}}">
+                            <label for="newName">Edit this hero's name</label>
+                            <input id="newName" name="newName" class="form-control" type="text" value="{{hero.name}}">
                         </div>
 
                         <div class="form-group">
-                            <label for="age">Edit this hero's age</label>
+                            <label for="newAge">Edit this hero's age</label>
                             <input id="newAge" name="newAge" type="number" class="form-control"  value="{{hero.age}}">
                         </div>
 
                         <div class="form-group">
-                            <label for="power">Edit this hero's special power</label>
+                            <label for="newPower">Edit this hero's special power</label>
                             <input id="newPower" name="newPower" class="form-control"  type="text" value="{{hero.power}}">
                         </div>
 
                         <div class="form-group">
-                            <label for="weakness">Edit this hero's weakness</label>
+                            <label for="newWeakness">Edit this hero's weakness</label>
                             <input id="newWeakness" name="newWeakness" type="text" class="form-control"  value="{{hero.weakness}}">
                         </div>
 
                         <div class="form-group">
-                            <label for="squadId">Edit this hero's squad</label>
+                            <label for="newSquadId">Edit this hero's squad</label>
                             <select id="newSquadId" name="newSquadId" class="form-control">
                                 {{#each squads}}
                                     <option value="{{id}}">{{name}}</option>
