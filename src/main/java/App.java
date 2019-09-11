@@ -10,7 +10,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
+
 
 public class App {
 
@@ -35,6 +35,7 @@ public class App {
         get("/heroes", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             List<Hero> heroes = heroDao.getAll();
+            List<Squad> squads = squadDao.getAll();
             model.put("heroes", heroes);
             return new ModelAndView(model, "all-heroes.hbs");
         }, new HandlebarsTemplateEngine());
@@ -58,6 +59,7 @@ public class App {
         post("/squads/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             String name = req.queryParams("name");
+            List<Squad> squads = squadDao.getAll();
             int maxSize = Integer.parseInt(req.queryParams("size"));
             String cause = req.queryParams("cause");
             Squad newSquad = new Squad(name,maxSize,cause);
@@ -69,6 +71,7 @@ public class App {
 
         get("/squads/delete", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            heroDao.clearAllHeroes();
             squadDao.clearAllSquads();
             res.redirect("/squads");
             return null;
@@ -111,6 +114,15 @@ public class App {
             int newMaxSize = Integer.parseInt(req.queryParams("newSize"));
             String newCause = req.queryParams("newCause");
             squadDao.update(idOfSquadToEdit, newName,newMaxSize,newCause);
+            res.redirect("/squads");
+            return null;
+        }, new HandlebarsTemplateEngine());
+
+        get("/squads/:id/delete", (req, res) -> {
+            int idOfSquadToDelete = Integer.parseInt(req.params("id"));
+            squadDao.deleteAllHeroesInSquad(idOfSquadToDelete);
+            squadDao.deleteById(idOfSquadToDelete);
+            squadDao.deleteAllHeroesInSquad(idOfSquadToDelete);
             res.redirect("/squads");
             return null;
         }, new HandlebarsTemplateEngine());
@@ -160,19 +172,6 @@ public class App {
             return null;
         }, new HandlebarsTemplateEngine());
 
-//        //get: show an individual Hero that is nested in a Squad
-//        get("/squads/:Squad_id/Heroes/:hero_id", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            int idOfHeroToFind = Integer.parseInt(req.params("squadId")); //pull id - must match route segment
-//            Hero foundHero = heroDao.findById(idOfHeroToFind); //use it to find Hero
-//            int idOfSquadToFind = Integer.parseInt(req.params("id"));
-//            Squad foundSquad = squadDao.findById(idOfSquadToFind);
-//            model.put("squad", foundSquad);
-//            model.put("Hero", foundHero);
-//            model.put("squads", squadDao.getAll());
-//            return new ModelAndView(model, "hero-detail.hbs"); //individual Hero page.
-//        }, new HandlebarsTemplateEngine());
-//
 
         get("/heroes/:id/edit", (req, res) -> {
             Map<String, Object> model = new HashMap<>();

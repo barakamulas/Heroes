@@ -25,4 +25,6 @@ public interface SquadDao {
     void clearAllSquads();
 
     List<Hero> getAllHeroesBySquad(int squadId);
+
+    void deleteAllHeroesInSquad(int squadId);
 }
