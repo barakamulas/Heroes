@@ -111,18 +111,18 @@ public class App {
             return new ModelAndView(model, "squad-form.hbs");
         }, new HandlebarsTemplateEngine());
 
-//        //post: process a form to update a Squad
-//        post("/squads/:id", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            int idOfSquadToEdit = Integer.parseInt(req.params("id"));
-//            String newName = req.queryParams("newSquadName");
-//            int newMaxSize = Integer.parseInt(req.params("newMaxSize"));
-//            String newCause = req.queryParams("newCause");
-//            squadDao.update(idOfSquadToEdit, newName,newMaxSize,newCause);
-//            res.redirect("/squads/:id");
-//            return null;
-//        }, new HandlebarsTemplateEngine());
-//
+
+        post("/squads/:id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfSquadToEdit = Integer.parseInt(req.params("id"));
+            String newName = req.queryParams("newSquadName");
+            int newMaxSize = Integer.parseInt(req.params("newMaxSize"));
+            String newCause = req.queryParams("newCause");
+            squadDao.update(idOfSquadToEdit, newName,newMaxSize,newCause);
+            res.redirect("/squads/:id");
+            return null;
+        }, new HandlebarsTemplateEngine());
+
 //        //get: delete an individual Hero
 //        get("/heroes/:hero_id/delete", (req, res) -> {
 //            Map<String, Object> model = new HashMap<>();
