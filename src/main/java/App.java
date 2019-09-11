@@ -91,14 +91,14 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
 
-//        get("/heroes/:id", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            int idOfHeroToFind = Integer.parseInt(req.params("id"));
-//            Hero foundHero = heroDao.findById(idOfHeroToFind);
-//            model.put("hero", foundHero);
-//            model.put("heroes", heroDao.getAll());
-//            return new ModelAndView(model, "hero-detail.hbs");
-//        }, new HandlebarsTemplateEngine());
+        get("/heroes/:id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfHeroToFind = Integer.parseInt(req.params("id"));
+            Hero foundHero = heroDao.findById(idOfHeroToFind);
+            model.put("hero", foundHero);
+            model.put("heroes", heroDao.getAll());
+            return new ModelAndView(model, "hero-detail.hbs");
+        }, new HandlebarsTemplateEngine());
 
 
 //        //get: show a form to update a Squad
