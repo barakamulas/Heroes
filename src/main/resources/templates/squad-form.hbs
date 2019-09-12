@@ -9,15 +9,15 @@
                 <form action="/squads/{{squad.id}}" method="post">
                     <div class="form-group">
                         <label for="newName">Edit this squad's name</label>
-                        <input id="newName" name="newName" type="text" class="form-control" value="{{squad.name}}">
+                        <input id="newName" name="newName" type="text" class="form-control" value="{{squad.name}}" required>
                     </div>
                     <div class="form-group">
                         <label for="newSize">Edit this squad's size</label>
-                        <input id="newSize" name="newSize" type="number" class="form-control"  value="{{squad.size}}">
+                        <input id="newSize" name="newSize" type="number" class="form-control"  value="{{squad.size}}" required>
                     </div>
                     <div class="form-group">
                         <label for="newCause">Edit this squad's cause</label>
-                        <input id="newCause" name="newCause" type="text" class="form-control"  value="{{squad.cause}}">
+                        <input id="newCause" name="newCause" type="text" class="form-control"  value="{{squad.cause}}" required>
                     </div>
                     <button type="submit" class="btn btn-default">Go!</button>
                 </form>
@@ -32,15 +32,15 @@
                 <form action="/squads/new" method="post">
                     <div class="form-group">
                         <label for="name">Squad Name</label>
-                        <input id="name" name="name" class="form-control" type="text" >
+                        <input id="name" name="name" class="form-control" type="text" required >
                     </div>
                     <div class="form-group">
                         <label for="size">Max Size</label>
-                        <input id="size" name="size" type="number" class="form-control"  >
+                        <input id="size" name="size" type="number" class="form-control"  required>
                     </div>
                     <div class="form-group">
                         <label for="cause">Cause</label>
-                        <input id="cause" name="cause" type="text" class="form-control" >
+                        <input id="cause" name="cause" type="text" class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-default">Go!</button>
                 </form>
