@@ -11,6 +11,10 @@
                         <p>{{squad.size}}</p>
                         <h3>Cause</h3><br>
                         <p>{{squad.cause}}</p><br>
+                        <div class="row" id="deled-button">
+                            <a href="/squads/{{squad.id}}/delete" class="btn btn-danger">Delete this squad</a>
+                            <a href="/squads/{{squad.id}}/edit" id="squad-delete" class="btn btn-primary">Edit this squad</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,10 +55,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" id="deled-button">
-            <a href="/squads/{{squad.id}}/delete" class="btn btn-danger">Delete this squad</a>
-            <a href="/squads/{{squad.id}}/edit" id="squad-delete" class="btn btn-primary">Edit this squad</a>
-        </div>
+
     </div>
 {{/partial}}
 {{> layout.hbs}}
