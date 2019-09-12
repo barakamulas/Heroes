@@ -35,7 +35,8 @@
                                     <ul class="nav nav-pills card-header-pills">
                                        
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/squads/{{squadId}}/heroes/{{id}}" class="btn btn-secondary">Edit</a>
+                                            <a class="nav-link" href="/heroes/{{id}}/edit" class="btn btn-primary">Edit</a>
+                                            <a class="nav-link" href="/heroes/{{id}}/delete" class="btn btn-danger">Delete</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -50,16 +51,10 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-
-            <a class="nav-link" href="/squads/{{squad.id}}/delete" class="btn btn-danger">Delete this squad</a>
-
-
-            <a class="nav-link" href="/squads/{{squad.id}}/edit" class="btn btn-secondary">Edit this squad</a>
-
+        <div class="row" id="deled-button">
+            <a href="/squads/{{squad.id}}/delete" class="btn btn-danger">Delete this squad</a>
+            <a href="/squads/{{squad.id}}/edit" id="squad-delete" class="btn btn-primary">Edit this squad</a>
         </div>
     </div>
-
-
 {{/partial}}
 {{> layout.hbs}}

@@ -150,6 +150,9 @@ public class App {
             Map<String, Object> model = new HashMap<>();
             int idOfHeroToFind = Integer.parseInt(req.params("id"));
             Hero foundHero = heroDao.findById(idOfHeroToFind);
+            int idOfSquad = foundHero.getSquadId();
+            Squad squad = squadDao.findById(idOfSquad);
+            model.put("squad", squad);
             model.put("hero", foundHero);
             model.put("heroes", heroDao.getAll());
             return new ModelAndView(model, "hero-detail.hbs");
