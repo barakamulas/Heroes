@@ -14,15 +14,13 @@ public class Squad {
         this.name = name;
         this.size = size;
         this.cause = cause;
-
     }
-
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setSquad_name(String name) {
         this.name = name;
     }
 
