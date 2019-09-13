@@ -196,8 +196,11 @@ public class App {
             String newWeakness = req.queryParams("newWeakness");
             String newSpecialPower = req.queryParams("newPower");
             heroDao.update(heroToEditId, newName, newAge, newSpecialPower, newWeakness, newSquadId);
-            res.redirect("/heroes");
-            return null;
+            List<Hero> heroes = heroDao.getAll();
+            Hero hero = heroDao.findById(heroToEditId);
+            model.put("heroes",heroes);
+            model.put("hero",hero);
+            return new ModelAndView(model, "hero-detail.hbs");
         }, new HandlebarsTemplateEngine());
      }
 }
