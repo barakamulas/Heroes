@@ -127,6 +127,26 @@ public class App {
             return null;
         }, new HandlebarsTemplateEngine());
 
+        get("/squads/:id/heroes/new", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfSquadToDelete = Integer.parseInt(req.params("id"));
+            Squad squad = squadDao.findById(idOfSquadToDelete);
+            model.put("squad", squad);
+            return modelAndView(model,"hero-to-squad-form.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        get("/squads/:id/heroes/delete", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfHeroToDelete = Integer.parseInt(req.params("id"));
+            Hero hero = heroDao.findById(idOfHeroToDelete);
+            Squad squad = squadDao.findById(hero.getSquadId());
+            heroDao.deleteById(idOfHeroToDelete);
+            model.put("squad", squad);
+            return modelAndView(model,"squad-detail.hbs");
+        }, new HandlebarsTemplateEngine());
+
+
+
 
         get("/heroes/:id/delete", (req, res) -> {
             Map<String, Object> model = new HashMap<>();

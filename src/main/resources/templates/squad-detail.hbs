@@ -12,8 +12,9 @@
                         <h3>Cause</h3><br>
                         <p>{{squad.cause}}</p><br>
                         <div class="row" id="deled-button">
-                            <a href="/squads/{{squad.id}}/delete" class="btn btn-danger">Delete this squad</a>
-                            <a href="/squads/{{squad.id}}/edit" id="squad-delete" class="btn btn-primary">Edit this squad</a>
+                            <a href="/squads/{{squad.id}}/delete" class="btn btn-danger">Delete this squad</a><br>
+                            <a href="/squads/{{squad.id}}/edit" id="squad-delete" class="btn btn-primary">Edit this squad</a><br><br>
+                            <a href="/squads/{{squad.id}}/heroes/new" id="hero-add" class="btn btn-primary">Add hero to this squad</a>
                         </div>
                     </div>
                 </div>
@@ -25,22 +26,16 @@
                 <div class="row">
                     {{#if heroes}}
                         {{#each heroes}}
-                        <div class="col-md-6">
+                        <div class="col-md-6" id="squad-hero">
                             <div class="card">
-                                <div class="card-header">
-                                    <h2>{{name}}</h2>
-                                </div>
                                 <div class="card-body">
-                                    <p class="card-text">Age: {{age}}</p>
-                                    <p class="card-text">Special Power: {{power}}</p>
-                                    <p class="card-text">Weakness: {{weakness}}</p>
+                                    <h3 class="card-text">{{name}}</h3>
                                 </div>
                                 <div class="card-footer">
                                     <ul class="nav nav-pills card-header-pills">
                                        
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/heroes/{{id}}/edit" class="btn btn-primary">Edit</a>
-                                            <a class="nav-link" href="/heroes/{{id}}/delete" class="btn btn-danger">Delete</a>
+                                            <a class="nav-link" href="/heroes/{{id}}" class="btn btn-primary">Details</a>
                                         </li>
                                     </ul>
                                 </div>
