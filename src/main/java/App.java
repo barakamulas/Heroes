@@ -135,6 +135,22 @@ public class App {
             return modelAndView(model,"hero-to-squad-form.hbs");
         }, new HandlebarsTemplateEngine());
 
+        post("/squads/:id/heroes/new", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfSquad = Integer.parseInt(req.params("id"));
+            int age = Integer.parseInt(req.queryParams("age"));
+            String name = req.queryParams("name");
+            String power = req.queryParams("power");
+            String weakness = req.queryParams("weakness");
+            Hero hero = new Hero(name,age,power,weakness,idOfSquad);
+            heroDao.add(hero);
+            Squad squad = squadDao.findById(idOfSquad);
+            model.put("squad", squad);
+            model.put("heroes", heroDao.getAll());
+            model.put("squads", squadDao.getAll());
+            return modelAndView(model,"squad-detail.hbs");
+        }, new HandlebarsTemplateEngine());
+
         get("/squads/:id/heroes/delete", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfHeroToDelete = Integer.parseInt(req.params("id"));
