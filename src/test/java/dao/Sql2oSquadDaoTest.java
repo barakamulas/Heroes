@@ -7,8 +7,9 @@ import org.sql2o.*;
 
 public class Sql2oSquadDaoTest {
 
-    private Sql2oSquadDao squadDao;
-    private Connection conn;
+    private static Sql2oSquadDao squadDao;
+    private static Sql2oHeroDao heroDao;
+    private static Connection conn;
 
 
     @Test
@@ -62,17 +63,26 @@ public class Sql2oSquadDaoTest {
         assertEquals(0,squadDao.getAll().size());
     }
 
-    @Before
-    public void setUp() throws Exception {
-        String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
-        Sql2o sql2o = new Sql2o(connectionString, "", "");
+    @BeforeClass
+    public static void setUp() throws Exception {
+        String connectionString = "jdbc:postgresql://localhost:5432/heroes_test";
+        Sql2o sql2o = new Sql2o(connectionString, "baraka", "fRankline");
         squadDao = new Sql2oSquadDao(sql2o);
+        heroDao = new Sql2oHeroDao(sql2o);
         conn = sql2o.open();
     }
 
     @After
     public void tearDown() throws Exception {
+        System.out.println("clearing database");
+        squadDao.clearAllSquads();
+        heroDao.clearAllHeroes();
+    }
+
+    @AfterClass
+    public static void shutDown() throws Exception {
         conn.close();
+        System.out.println("connection closed");
     }
 
     public Squad setUpNewSquad(){

@@ -3,7 +3,7 @@ CREATE DATABASE heroes;
 
 \c heroes
 
-CREATE TABLE heroes(id SERIAL PRIMARY KEY, name varchar, age INTEGER, power varchar, squadId INTEGER);
+CREATE TABLE heroes(id SERIAL PRIMARY KEY, name varchar, age INTEGER, power varchar, weakness varchar, squadId INTEGER);
 
 CREATE TABLE squads(id SERIAL PRIMARY KEY, name varchar, size INTEGER, cause varchar);
 

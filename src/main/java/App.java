@@ -17,8 +17,8 @@ public class App {
     public static void main(String[] args) {
 
         staticFileLocation("/public");
-        String connectionString = "jdbc:h2:~/hero-squad.db;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
-        Sql2o sql2o = new Sql2o(connectionString, "", "");
+        String connectionString = "jdbc:postgresql://localhost:5432/heroes";
+        Sql2o sql2o = new Sql2o(connectionString, "baraka", "fRankline");
         Sql2oHeroDao heroDao = new Sql2oHeroDao(sql2o);
         Sql2oSquadDao squadDao = new Sql2oSquadDao(sql2o);
 
