@@ -44,7 +44,6 @@ public class App {
             return new ModelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
 
-
         get("/heroes", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             List<Hero> heroes = heroDao.getAll();
@@ -153,12 +152,19 @@ public class App {
             String power = req.queryParams("power");
             String weakness = req.queryParams("weakness");
             Hero hero = new Hero(name,age,power,weakness,idOfSquad);
-            heroDao.add(hero);
-            Squad squad = squadDao.findById(idOfSquad);
-            model.put("squad", squad);
-            model.put("heroes", squadDao.getAllHeroesBySquad(idOfSquad));
-            model.put("squads", squadDao.getAll());
-            return modelAndView(model,"squad-detail.hbs");
+            if ( squadDao.getAllHeroesBySquad(idOfSquad).size()==squadDao.findById(idOfSquad).getSize()){
+                model.put("heroes", heroDao.getAll());
+                model.put("squas", squadDao.getAll());
+                return modelAndView(model, "squad-full.hbs");
+            }else{
+                heroDao.add(hero);
+                Squad squad = squadDao.findById(idOfSquad);
+                model.put("squad", squad);
+                model.put("heroes", squadDao.getAllHeroesBySquad(idOfSquad));
+                model.put("squads", squadDao.getAll());
+                return modelAndView(model,"squad-detail.hbs");
+            }
+
         }, new HandlebarsTemplateEngine());
 
         get("/squads/:id/heroes/delete", (req, res) -> {
@@ -205,14 +211,23 @@ public class App {
             List<Hero> heroes = heroDao.getAll();
             model.put("heroes", heroes);
             String name = req.queryParams("name");
-            int SquadId = Integer.parseInt(req.queryParams("squadId"));
+            int squadId = Integer.parseInt(req.queryParams("squadId"));
             int age = Integer.parseInt(req.queryParams("age"));
             String weakness = req.queryParams("weakness");
             String power = req.queryParams("power");
-            Hero newHero = new Hero(name, age, power, weakness, SquadId);
-            heroDao.add(newHero);
-            res.redirect("/heroes");
-            return null;
+            if (squadDao.getAllHeroesBySquad(squadId).size()==squadDao.findById(squadId).getSize()){
+                model.put("squads", squadDao.getAll());
+                model.put("heroes", heroDao.getAll());
+                return new ModelAndView(model, "squad-full.hbs");
+            }else{
+                Hero newHero = new Hero(name, age, power, weakness, squadId);
+                heroDao.add(newHero);
+                model.put("squads", squadDao.getAll());
+                model.put("heroes", heroDao.getAll());
+                res.redirect("/heroes");
+                return null;
+            }
+
         }, new HandlebarsTemplateEngine());
 
         get("/heroes/:id/edit", (req, res) -> {
