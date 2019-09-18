@@ -6,7 +6,7 @@
                 <h3>Edit this squad!</h3>
             </div>
             <div class="card-body">
-                <form action="/squads/{{squad.id}}" method="post">
+                <form action="/squads/{{squad.id}}/edit" method="post">
                     <div class="form-group">
                         <label for="newName">Edit this squad's name</label>
                         <input id="newName" name="newName" type="text" class="form-control" value="{{squad.name}}" required>
