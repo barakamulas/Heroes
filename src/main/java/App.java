@@ -47,14 +47,12 @@ public class App {
             return new ModelAndView(model, "all-squads.hbs");
         }, new HandlebarsTemplateEngine());
 
-
         get("/squads/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             List<Squad> squads = squadDao.getAll();
             model.put("squads", squads);
             return new ModelAndView(model, "squad-form.hbs");
         }, new HandlebarsTemplateEngine());
-
 
         post("/squads/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -68,7 +66,6 @@ public class App {
             return null;
         }, new HandlebarsTemplateEngine());
 
-
         get("/squads/delete", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             heroDao.clearAllHeroes();
@@ -77,14 +74,12 @@ public class App {
             return null;
         }, new HandlebarsTemplateEngine());
 
-
         get("/heroes/delete", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             heroDao.clearAllHeroes();
             res.redirect("/heroes");
             return null;
         }, new HandlebarsTemplateEngine());
-
 
         get("/squads/:id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -105,7 +100,6 @@ public class App {
             model.put("squads", squadDao.getAll());
             return new ModelAndView(model, "squad-form.hbs");
         }, new HandlebarsTemplateEngine());
-
 
         post("/squads/:id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -161,9 +155,6 @@ public class App {
             return modelAndView(model,"squad-detail.hbs");
         }, new HandlebarsTemplateEngine());
 
-
-
-
         get("/heroes/:id/delete", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfHeroToDelete = Integer.parseInt(req.params("id"));
@@ -171,7 +162,6 @@ public class App {
             res.redirect("/heroes");
             return null;
         }, new HandlebarsTemplateEngine());
-
 
         get("/heroes/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -194,8 +184,6 @@ public class App {
             return new ModelAndView(model, "hero-detail.hbs");
         }, new HandlebarsTemplateEngine());
 
-
-
         post("/heroes/new", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             List<Hero> heroes = heroDao.getAll();
@@ -211,7 +199,6 @@ public class App {
             return null;
         }, new HandlebarsTemplateEngine());
 
-
         get("/heroes/:id/edit", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             List<Squad> allSquads = squadDao.getAll();
@@ -221,7 +208,6 @@ public class App {
             model.put("editHero", true);
             return new ModelAndView(model, "hr-form.hbs");
         }, new HandlebarsTemplateEngine());
-
 
         post("/heroes/:id", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
