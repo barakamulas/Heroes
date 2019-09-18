@@ -1,1 +1,1 @@
-web: ./build/install/heroes/bin/heroes
+web: ./build/install/protector-heroes/bin/protector-heroes
