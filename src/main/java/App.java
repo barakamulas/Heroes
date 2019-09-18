@@ -14,23 +14,23 @@ import java.util.Map;
 
 public class App {
 
-//    static int getHerokuAssignedPort() {
-//        ProcessBuilder processBuilder = new ProcessBuilder();
-//        if (processBuilder.environment().get("PORT") != null) {
-//            return Integer.parseInt(processBuilder.environment().get("PORT"));
-//        }
-//        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
-//    }
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+    }
 
     public static void main(String[] args) {
-//        port(getHerokuAssignedPort());
+        port(getHerokuAssignedPort());
 
 
         staticFileLocation("/public");
-        String connectionString = "jdbc:postgresql://localhost:5432/heroes";
-        Sql2o sql2o = new Sql2o(connectionString, "baraka", "fRankline");
-//        String connectionString = "jdbc:postgresql://hhmgarbtrfefza:529f5b88d4e82a1486da5dee9c0802d62032029d23bebed9789a01248b79d088@ec2-54-235-180-123.compute-1.amazonaws.com:5432/d9jh1sfpbob72s";
-//        Sql2o sql2o = new Sql2o(connectionString, "hhmgarbtrfefza", "529f5b88d4e82a1486da5dee9c0802d62032029d23bebed9789a01248b79d088");
+//        String connectionString = "jdbc:postgresql://localhost:5432/heroes";
+//        Sql2o sql2o = new Sql2o(connectionString, "baraka", "fRankline");
+        String connectionString = "jdbc:postgresql://hhmgarbtrfefza:529f5b88d4e82a1486da5dee9c0802d62032029d23bebed9789a01248b79d088@ec2-54-235-180-123.compute-1.amazonaws.com:5432/d9jh1sfpbob72s";
+        Sql2o sql2o = new Sql2o(connectionString, "hhmgarbtrfefza", "529f5b88d4e82a1486da5dee9c0802d62032029d23bebed9789a01248b79d088");
         Sql2oHeroDao heroDao = new Sql2oHeroDao(sql2o);
         Sql2oSquadDao squadDao = new Sql2oSquadDao(sql2o);
 
