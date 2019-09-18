@@ -76,15 +76,7 @@ public class Sql2oHeroDaoTest {
 
     @After
     public void tearDown() throws Exception {
-        System.out.println("clearing database");
-        squadDao.clearAllSquads();
-        heroDao.clearAllHeroes();
-    }
-
-    @AfterClass
-    public static void shutDown() throws Exception {
         conn.close();
-        System.out.println("connection closed");
     }
 
     public Hero setUpNewHero(){
