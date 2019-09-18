@@ -15,7 +15,7 @@ public class Sql2oHeroDao implements HeroDao {
     @Override
     public void add(Hero hero) {
         String sql = "INSERT INTO  heroes (name,age,power,weakness,squadId) VALUES (:name,:age,:power,:weakness,:squadId)";
-        try(Connection con = sql2o.open()){
+        try(Connection con = DB.sql2o.open()){
             int id = (int) con.createQuery(sql, true)
                     .bind(hero)
                     .executeUpdate()
@@ -28,7 +28,7 @@ public class Sql2oHeroDao implements HeroDao {
 
     @Override
     public List<Hero> getAll() {
-        try(Connection con = sql2o.open()){
+        try(Connection con = DB.sql2o.open()){
             return con.createQuery("SELECT * FROM heroes")
                     .executeAndFetch(Hero.class);
         }
@@ -36,7 +36,7 @@ public class Sql2oHeroDao implements HeroDao {
 
     @Override
     public Hero findById(int id) {
-        try(Connection con = sql2o.open()){
+        try(Connection con = DB.sql2o.open()){
             return con.createQuery("SELECT * FROM heroes WHERE id = :id")
                     .addParameter("id", id)
                     .executeAndFetchFirst(Hero.class);
@@ -47,7 +47,7 @@ public class Sql2oHeroDao implements HeroDao {
     @Override
     public void update(int id, String newName, int newAge, String newPower, String newWeakness, int newSquadId){
         String sql = "UPDATE heroes SET name = :name, age = :age, power = :power, weakness = :weakness, squadId = :squadId WHERE id=:id";
-        try(Connection con = sql2o.open()){
+        try(Connection con = DB.sql2o.open()){
             con.createQuery(sql)
                     .addParameter("name", newName)
                     .addParameter("id", id)
@@ -64,7 +64,7 @@ public class Sql2oHeroDao implements HeroDao {
     @Override
     public void deleteById(int id) {
         String sql = "DELETE from heroes WHERE id=:id";
-        try (Connection con = sql2o.open()) {
+        try (Connection con = DB.sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("id", id)
                     .executeUpdate();
@@ -76,7 +76,7 @@ public class Sql2oHeroDao implements HeroDao {
     @Override
     public void clearAllHeroes() {
         String sql = "DELETE from heroes";
-        try (Connection con = sql2o.open()) {
+        try (Connection con = DB.sql2o.open()) {
             con.createQuery(sql)
                     .executeUpdate();
         } catch (Sql2oException ex){
