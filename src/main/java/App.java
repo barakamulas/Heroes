@@ -16,18 +16,13 @@ public class App {
 
     public static void main(String[] args) {
 
-        ProcessBuilder process = new ProcessBuilder();
-        Integer port;
-        if (process.environment().get("PORT") != null) {
-            port = Integer.parseInt(process.environment().get("PORT"));
-        } else {
-            port = 4567;
-        }
-        port(port);
+
 
         staticFileLocation("/public");
-        String connectionString = "jdbc:postgresql://localhost:5432/heroes";
-        Sql2o sql2o = new Sql2o(connectionString, "baraka", "fRankline");
+//        String connectionString = "jdbc:postgresql://localhost:5432/heroes";
+//        Sql2o sql2o = new Sql2o(connectionString, "baraka", "fRankline");
+        String connectionString = "jdbc:postgres://hhmgarbtrfefza:529f5b88d4e82a1486da5dee9c0802d62032029d23bebed9789a01248b79d088@ec2-54-235-180-123.compute-1.amazonaws.com:5432/d9jh1sfpbob72s";
+        Sql2o sql2o = new Sql2o(connectionString, "hhmgarbtrfefza", "529f5b88d4e82a1486da5dee9c0802d62032029d23bebed9789a01248b79d088");
         Sql2oHeroDao heroDao = new Sql2oHeroDao(sql2o);
         Sql2oSquadDao squadDao = new Sql2oSquadDao(sql2o);
 
