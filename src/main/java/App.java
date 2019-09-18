@@ -105,6 +105,7 @@ public class App {
             Map<String, Object> model = new HashMap<>();
             model.put("editSquad", true);
             Squad squad = squadDao.findById(Integer.parseInt(req.params("id")));
+            model.put("heroes", heroDao.getAll());
             model.put("squad", squad);
             model.put("squads", squadDao.getAll());
             return new ModelAndView(model, "squad-form.hbs");
@@ -215,6 +216,7 @@ public class App {
             Hero hero = heroDao.findById(Integer.parseInt(req.params("id")));
             model.put("hero", hero);
             model.put("editHero", true);
+            model.put("squads", squadDao.getAll());
             return new ModelAndView(model, "hr-form.hbs");
         }, new HandlebarsTemplateEngine());
 
