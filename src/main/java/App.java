@@ -27,11 +27,11 @@ public class App {
         Sql2oSquadDao squadDao = new Sql2oSquadDao(sql2o);
 
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            List<Squad> squads = squadDao.getAll();
-            List<Hero> heroes = heroDao.getAll();
-            model.put("squads", squads);
-            model.put("heroes", heroes);
+//            Map<String, Object> model = new HashMap<>();
+//            List<Squad> squads = squadDao.getAll();
+//            List<Hero> heroes = heroDao.getAll();
+//            model.put("squads", squads);
+//            model.put("heroes", heroes);
             return new ModelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
 
