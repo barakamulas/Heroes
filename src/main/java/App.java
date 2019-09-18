@@ -231,6 +231,7 @@ public class App {
             heroDao.update(heroToEditId, newName, newAge, newSpecialPower, newWeakness, newSquadId);
             List<Hero> heroes = heroDao.getAll();
             Hero hero = heroDao.findById(heroToEditId);
+            model.put("squad", squadDao.findById(hero.getSquadId()));
             model.put("heroes",heroes);
             model.put("hero",hero);
             return new ModelAndView(model, "hero-detail.hbs");

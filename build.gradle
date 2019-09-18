@@ -3,9 +3,13 @@ plugins {
     id 'application'
 }
 
+repositories {
+    jcenter()
+}
+
 group 'com.baraka.hero-squad'
 version '1.0-SNAPSHOT'
-applicationName = 'protector-heroes'
+applicationName = 'protectorheroes'
 mainClassName = 'App'
 sourceCompatibility = 1.8
 
