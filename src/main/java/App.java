@@ -16,6 +16,15 @@ public class App {
 
     public static void main(String[] args) {
 
+        ProcessBuilder process = new ProcessBuilder();
+        Integer port;
+
+        if (process.environment().get("PORT") != null) {
+            port = Integer.parseInt(process.environment().get("PORT"));
+        } else {
+            port = 4567;
+        }
+
 
 
         staticFileLocation("/public");
@@ -28,10 +37,10 @@ public class App {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-//            List<Squad> squads = squadDao.getAll();
-//            List<Hero> heroes = heroDao.getAll();
-//            model.put("squads", squads);
-//            model.put("heroes", heroes);
+            List<Squad> squads = squadDao.getAll();
+            List<Hero> heroes = heroDao.getAll();
+            model.put("squads", squads);
+            model.put("heroes", heroes);
             return new ModelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
 
