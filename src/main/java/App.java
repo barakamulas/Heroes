@@ -156,7 +156,7 @@ public class App {
             heroDao.add(hero);
             Squad squad = squadDao.findById(idOfSquad);
             model.put("squad", squad);
-            model.put("heroes", heroDao.getAll());
+            model.put("heroes", squadDao.getAllHeroesBySquad(idOfSquad));
             model.put("squads", squadDao.getAll());
             return modelAndView(model,"squad-detail.hbs");
         }, new HandlebarsTemplateEngine());
