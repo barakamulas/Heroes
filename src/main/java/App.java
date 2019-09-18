@@ -37,9 +37,9 @@ public class App {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             List<Squad> squads = squadDao.getAll();
-            List<Hero> heroes = heroDao.getAll();
+//            List<Hero> heroes = heroDao.getAll();
             model.put("squads", squads);
-            model.put("heroes", heroes);
+//            model.put("heroes", heroes);
             return new ModelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
 
