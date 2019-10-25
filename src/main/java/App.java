@@ -38,7 +38,6 @@ public class App {
             Map<String, Object> model = new HashMap<>();
             List<Squad> squads = squadDao.getAll();
             List<Hero> heroes = heroDao.getAll();
-            System.out.println(heroes);
             model.put("squads", squads);
             model.put("heroes", heroes);
             return new ModelAndView(model, "index.hbs");
