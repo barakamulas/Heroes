@@ -78,12 +78,12 @@ public class App {
             List<Squad> squads = squadDao.getAll();
             List<String> squadNames = new ArrayList<>();
             for(Squad squad: squads){
-                squadNames.add(squad.getName());
+                squadNames.add(squad.getName().toLowerCase());
             }
             int maxSize = Integer.parseInt(req.queryParams("size"));
             String cause = req.queryParams("cause");
             Squad newSquad = new Squad(name,maxSize,cause);
-            if (squadNames.contains(newSquad.getName())) {
+            if (squadNames.contains(newSquad.getName().toLowerCase())) {
                 return new ModelAndView(model, "squad-exists.hbs");
             }
             squadDao.add(newSquad);
