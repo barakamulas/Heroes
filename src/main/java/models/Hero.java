@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class Hero {
 
+
     private int id;
     private String name;
     private int age;

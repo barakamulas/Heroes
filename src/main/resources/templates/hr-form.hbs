@@ -41,6 +41,7 @@
             </div>
 
         {{else}}
+            {{#if squads}}
             <div class="card">
                 <div class="card-header">
                     <h3>Add Hero</h3>
@@ -75,6 +76,12 @@
                     </form>
                 </div>
             </div>
+
+            {{else}}
+            <div class="container">
+                <h2>Create at least one squad first <a href="/squads/new">Here</a></h2>
+            </div>
+            {{/if}}
 
 
 

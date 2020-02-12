@@ -21,6 +21,7 @@ public class Sql2oHeroDao implements HeroDao {
                     .executeUpdate()
                     .getKey();
             hero.setId(id);
+            System.out.println(hero.getId());
         } catch (Sql2oException ex) {
             System.out.println(ex);
         }

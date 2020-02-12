@@ -7,6 +7,8 @@ import models.Squad;
 import org.sql2o.Sql2o;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,10 +29,15 @@ public class App {
 
 
         staticFileLocation("/public");
-//        String connectionString = "jdbc:postgresql://localhost:5432/heroes";
-//        Sql2o sql2o = new Sql2o(connectionString, "baraka", "fRankline");
-        String connectionString = "jdbc:postgresql://hhmgarbtrfefza:529f5b88d4e82a1486da5dee9c0802d62032029d23bebed9789a01248b79d088@ec2-54-235-180-123.compute-1.amazonaws.com:5432/d9jh1sfpbob72s";
-        Sql2o sql2o = new Sql2o(connectionString, "hhmgarbtrfefza", "529f5b88d4e82a1486da5dee9c0802d62032029d23bebed9789a01248b79d088");
+
+//        Connection string to the database on local disk (the next 2 lines)
+        String connectionString = "jdbc:postgresql://localhost:5432/heroes";
+        Sql2o sql2o = new Sql2o(connectionString, "baraka", "fRankline");
+
+//        Connection string to the database deployed on heroku (the next 2 lines)
+//        String connectionString = "jdbc:postgresql://hhmgarbtrfefza:529f5b88d4e82a1486da5dee9c0802d62032029d23bebed9789a01248b79d088@ec2-54-235-180-123.compute-1.amazonaws.com:5432/d9jh1sfpbob72s";
+//        Sql2o sql2o = new Sql2o(connectionString, "hhmgarbtrfefza", "529f5b88d4e82a1486da5dee9c0802d62032029d23bebed9789a01248b79d088");
+
         Sql2oHeroDao heroDao = new Sql2oHeroDao(sql2o);
         Sql2oSquadDao squadDao = new Sql2oSquadDao(sql2o);
 
@@ -69,9 +76,16 @@ public class App {
             Map<String, Object> model = new HashMap<>();
             String name = req.queryParams("name");
             List<Squad> squads = squadDao.getAll();
+            List<String> squadNames = new ArrayList<>();
+            for(Squad squad: squads){
+                squadNames.add(squad.getName());
+            }
             int maxSize = Integer.parseInt(req.queryParams("size"));
             String cause = req.queryParams("cause");
             Squad newSquad = new Squad(name,maxSize,cause);
+            if (squadNames.contains(newSquad.getName())) {
+                return new ModelAndView(model, "squad-exists.hbs");
+            }
             squadDao.add(newSquad);
             res.redirect("/squads");
             return null;
