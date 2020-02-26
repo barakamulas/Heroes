@@ -6,12 +6,18 @@ import models.Hero;
 import models.Squad;
 import org.sql2o.Sql2o;
 import spark.ModelAndView;
+import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import spark.utils.IOUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
+import javax.servlet.http.Part;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.*;
 
 
 public class App {
@@ -21,14 +27,16 @@ public class App {
         if (processBuilder.environment().get("PORT") != null) {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
-        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+        return 4567; //return default.png port if heroku-port isn't set (i.e. on localhost)
     }
 
     public static void main(String[] args) {
         port(getHerokuAssignedPort());
-
-
         staticFileLocation("/public");
+        File uploadDir = new File("src/main/resources/public/images");
+        uploadDir.mkdir(); // create the upload directory if it doesn't exist
+        staticFiles.externalLocation("src/main/resources/public/images");
+
 
 //        Connection string to the database on local disk (the next 2 lines)
         String connectionString = "jdbc:postgresql://localhost:5432/heroes";
@@ -164,10 +172,10 @@ public class App {
             String name = req.queryParams("name");
             String power = req.queryParams("power");
             String weakness = req.queryParams("weakness");
-            Hero hero = new Hero(name,age,power,weakness,idOfSquad);
+            Hero hero = new Hero(name,age,power,weakness,idOfSquad,"default.png");
             if ( squadDao.getAllHeroesBySquad(idOfSquad).size()==squadDao.findById(idOfSquad).getSize()){
                 model.put("heroes", heroDao.getAll());
-                model.put("squas", squadDao.getAll());
+                model.put("squads", squadDao.getAll());
                 return modelAndView(model, "squad-full.hbs");
             }else{
                 heroDao.add(hero);
@@ -183,6 +191,7 @@ public class App {
         get("/squads/:id/heroes/delete", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfHeroToDelete = Integer.parseInt(req.params("id"));
+            System.out.println("Hero ID: " + idOfHeroToDelete);
             Hero hero = heroDao.findById(idOfHeroToDelete);
             Squad squad = squadDao.findById(hero.getSquadId());
             heroDao.deleteById(idOfHeroToDelete);
@@ -204,7 +213,7 @@ public class App {
             List<Squad> squads = squadDao.getAll();
             model.put("heroes", heroes);
             model.put("squads", squads);
-            return new ModelAndView(model, "hr-form.hbs");
+            return new ModelAndView(model, "hero-form.hbs");
         }, new HandlebarsTemplateEngine());
 
         get("/heroes/:id", (req, res) -> {
@@ -233,7 +242,7 @@ public class App {
                 model.put("heroes", heroDao.getAll());
                 return new ModelAndView(model, "squad-full.hbs");
             }else{
-                Hero newHero = new Hero(name, age, power, weakness, squadId);
+                Hero newHero = new Hero(name, age, power, weakness, squadId,"default.png");
                 heroDao.add(newHero);
                 model.put("squads", squadDao.getAll());
                 model.put("heroes", heroDao.getAll());
@@ -251,10 +260,10 @@ public class App {
             model.put("hero", hero);
             model.put("editHero", true);
             model.put("squads", squadDao.getAll());
-            return new ModelAndView(model, "hr-form.hbs");
+            return new ModelAndView(model, "hero-form.hbs");
         }, new HandlebarsTemplateEngine());
 
-        post("/heroes/:id", (req, res) -> {
+        post("/heroes/:id/edit", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int heroToEditId = Integer.parseInt(req.params("id"));
             String newName = req.queryParams("newName");
@@ -270,6 +279,108 @@ public class App {
             model.put("hero",hero);
             return new ModelAndView(model, "hero-detail.hbs");
         }, new HandlebarsTemplateEngine());
-     }
+
+        get("/upload/:id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int heroId = Integer.parseInt(req.params("id"));
+            model.put("hero", heroDao.findById(heroId));
+            return new ModelAndView(model, "upload-image.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        post("/upload/:id", (req, res) -> {
+            Path tempFile = Files.createTempFile(uploadDir.toPath(), "", "");
+            req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/images"));
+            Map<String, Object> model = new HashMap<>();
+            int heroId = Integer.parseInt(req.params("id"));
+            try (InputStream input = req.raw().getPart("image").getInputStream()) { // getPart needs to use same "name" as input field in form
+                Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
+            }
+            heroDao.uploadImage(heroId, tempFile.getFileName().toString());
+            model.put("hero", heroDao.findById(heroId));
+            return new ModelAndView(model,"hero-detail.hbs");
+        }, new HandlebarsTemplateEngine());
+
+
+
+
+//        get("/upload", (req, res) ->
+//                "<form method='post' enctype='multipart/form-data'>" // note the enctype
+//                        + "<div class='form-group'>"
+//                        + "    <input class='btn-primary' type='file' name='uploaded_file' accept='.png, .jpg, .jpeg'>" // make sure to call getPart using the same "name" in the post
+//                        + "</div>"
+//                        + "<br>"
+//                        + "<div class='form-group'>"
+//                        + "    <button class='btn-primary'>Upload picture</button>"
+//                        + "</div>"
+//                        + "</form>"
+//        );
+//
+//        post("/upload", (req, res) -> {
+//
+//            Path tempFile = Files.createTempFile(uploadDir.toPath(), "", "");
+//            String imageName = tempFile.getFileName().toString();
+//
+//            req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/images"));
+//
+//
+//            try (InputStream input = req.raw().getPart("uploaded_file").getInputStream()) {// getPart needs to use same "name" as input field in form
+//                Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
+//            }
+//
+//            logInfo(req, tempFile);
+//            return "<h1>You uploaded this image:<h1><img src='" + tempFile.getFileName() + "' height='150' width='150'>";
+//        });
+//     }
+//
+//    private static void logInfo(Request req, Path tempFile) throws IOException, ServletException {
+//        System.out.println("Uploaded file '" + getFileName(req.raw().getPart("uploaded_file")).getBytes() + "' saved as '" + tempFile.getFileName().toString() + "'");
+//    }
+//
+//    private static String getFileName(Part part) {
+//        for (String cd : part.getHeader("content-disposition").split(";")) {
+//            if (cd.trim().startsWith("filename")) {
+//                return cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+//            }
+//        }
+//        return null;
+//    }
+
+        get("/upload", (req, res) ->
+                "<form method='post' enctype='multipart/form-data'>" // note the enctype
+                        + "    <input type='file' name='uploaded_file' accept='.png, .jpeg, .jpg'>" // make sure to call getPart using the same "name" in the post
+                        + "    <button>Upload picture</button>"
+                        + "</form>"
+        );
+
+        post("/upload", (req, res) -> {
+
+            Path tempFile = Files.createTempFile(uploadDir.toPath(), "", "");
+
+            req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/images"));
+
+            try (InputStream input = req.raw().getPart("uploaded_file").getInputStream()) { // getPart needs to use same "name" as input field in form
+                Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            logInfo(req, tempFile);
+            return "<h1>You uploaded this image:<h1><img src='" + tempFile.getFileName() + "' height='150' width='150'>";
+
+        });
+
+    }
+
+    // methods used for logging
+    private static void logInfo(Request req, Path tempFile) throws IOException, ServletException {
+        System.out.println("Uploaded file '" + getFileName(req.raw().getPart("uploaded_file")) + "' saved as '" + tempFile.toAbsolutePath() + "'");
+    }
+
+    private static String getFileName(Part part) {
+        for (String cd : part.getHeader("content-disposition").split(";")) {
+            if (cd.trim().startsWith("filename")) {
+                return cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+        return null;
+    }
 }
 

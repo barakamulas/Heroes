@@ -14,7 +14,7 @@ public class Sql2oHeroDao implements HeroDao {
 
     @Override
     public void add(Hero hero) {
-        String sql = "INSERT INTO  heroes (name,age,power,weakness,squadId) VALUES (:name,:age,:power,:weakness,:squadId)";
+        String sql = "INSERT INTO  heroes (name,age,power,weakness,squadId,image) VALUES (:name,:age,:power,:weakness,:squadId,:image)";
         try(Connection con = DB.sql2o.open()){
             int id = (int) con.createQuery(sql, true)
                     .bind(hero)
@@ -83,6 +83,20 @@ public class Sql2oHeroDao implements HeroDao {
         } catch (Sql2oException ex){
             System.out.println(ex);
         }
+    }
+
+    @Override
+    public void uploadImage(int id, String image) {
+        String sql = "UPDATE heroes SET image = :image WHERE id=:id";
+        try(Connection con = DB.sql2o.open()){
+            con.createQuery(sql)
+                    .addParameter("id", id)
+                    .addParameter("image", image)
+                    .executeUpdate();
+        } catch (Sql2oException ex) {
+            System.out.println(ex);
+        }
+
     }
 
 }

@@ -22,4 +22,6 @@ public interface HeroDao {
     void deleteById(int id);
 
     void clearAllHeroes();
+
+    void uploadImage(int id, String image);
 }
