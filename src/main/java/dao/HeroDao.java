@@ -23,5 +23,5 @@ public interface HeroDao {
 
     void clearAllHeroes();
 
-    void uploadImage(int id, String image);
+    void uploadImage(int id, byte[] image);
 }

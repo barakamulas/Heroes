@@ -8,6 +8,7 @@
     margin-top: 10px;
 }
 
+
 .card{
     background-color: #CB5940;
     color: white;
@@ -58,6 +59,10 @@ table{
 
 #squad-hero{
     margin-top: 5px;
+}
+
+.rounded-circle{
+    object-fit: cover;
 }
 
 

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                <a href="/upload/{{hero.id}}"><img src="/images/{{hero.image}}" class="rounded-circle" height="150" width="150"></a>
+                <a href="/upload/{{hero.id}}"><img src="data:image/png;base64, {{encodedString}}" class="rounded-circle" height="150" width="150" /></a>
                 <h2>{{hero.name}}</h2>
             </div>
             <div class="card-body">

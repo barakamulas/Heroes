@@ -6,11 +6,11 @@ import java.util.List;
 
 public class Sql2oHeroDao implements HeroDao {
 
-    private final Sql2o sql2o;
+    //private final Sql2o sql2o;
 
-    public Sql2oHeroDao(Sql2o sql2o){
-        this.sql2o = sql2o;
-    }
+//    public Sql2oHeroDao(Sql2o sql2o){
+//        this.sql2o = sql2o;
+//    }
 
     @Override
     public void add(Hero hero) {
@@ -86,7 +86,7 @@ public class Sql2oHeroDao implements HeroDao {
     }
 
     @Override
-    public void uploadImage(int id, String image) {
+    public void uploadImage(int id, byte[] image) {
         String sql = "UPDATE heroes SET image = :image WHERE id=:id";
         try(Connection con = DB.sql2o.open()){
             con.createQuery(sql)

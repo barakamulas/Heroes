@@ -11,7 +11,7 @@ public class Hero {
     private String power;
     private String weakness;
     private int squadId;
-    private String image;
+    private byte[] image;
 
     public String getName() {
         return name;
@@ -21,7 +21,7 @@ public class Hero {
         this.name = name;
     }
 
-    public Hero(String name, int age, String power, String weakness, int squadId, String image) {
+    public Hero(String name, int age, String power, String weakness, int squadId, byte[] image) {
         this.name = name;
         this.age = age;
         this.power = power;
@@ -39,11 +39,11 @@ public class Hero {
     }
 
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
