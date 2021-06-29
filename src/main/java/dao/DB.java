@@ -7,13 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DB {
-    private static URI dbUri;
     public static Sql2o sql2o;
 
     static {
         Logger logger = LoggerFactory.getLogger(DB.class);
 
         try {
+            URI dbUri;
             if (System.getenv("DATABASE_URL") == null) {
                 dbUri = new URI("postgres://localhost:5432/heroes");
                 logger.info("Using local database.");

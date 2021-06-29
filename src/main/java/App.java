@@ -36,47 +36,37 @@ public class App {
     public static void main(String[] args) throws IOException {
         port(getHerokuAssignedPort());
         staticFiles.location("/public");
-        File file = new File("src/main/resources/public/images/default.png");
+        File file = new File("src/main/resources/public/images/default.png");//default image for heroes
         InputStream fis = new FileInputStream(file);
         //create FileInputStream which obtains input bytes from a file in a file system
         //FileInputStream is meant for reading streams of raw bytes such as image data. For reading streams of characters, consider using FileReader.
         byte[] bytes = IOUtils.toByteArray(fis); //Convert the inputStream to bytearray
         Sql2oHeroDao heroDao = new Sql2oHeroDao();
         Sql2oSquadDao squadDao = new Sql2oSquadDao();
+        Map<String, Object> model = new HashMap<>();
+        
 
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             List<Squad> squads = squadDao.getAll();
             List<Hero> heroes = heroDao.getAll();
             model.put("squads", squads);
             model.put("heroes", heroes);
             return new ModelAndView(model, "index.hbs");
-        }, new HandlebarsTemplateEngine());
-
-        get("/heroes", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            List<Hero> heroes = heroDao.getAll();
-            List<Squad> squads = squadDao.getAll();
-            model.put("heroes", heroes);
-            return new ModelAndView(model, "all-heroes.hbs");
-        }, new HandlebarsTemplateEngine());
+        }, new HandlebarsTemplateEngine());       
 
         get("/squads", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             List<Squad> allSquads = squadDao.getAll();
             model.put("squads", allSquads);
             return new ModelAndView(model, "all-squads.hbs");
         }, new HandlebarsTemplateEngine());
 
         get("/squads/new", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             List<Squad> squads = squadDao.getAll();
             model.put("squads", squads);
             return new ModelAndView(model, "squad-form.hbs");
         }, new HandlebarsTemplateEngine());
 
         post("/squads/new", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             String name = req.queryParams("name");
             List<Squad> squads = squadDao.getAll();
             List<String> squadNames = new ArrayList<>();
@@ -95,22 +85,13 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
         get("/squads/delete", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             heroDao.clearAllHeroes();
             squadDao.clearAllSquads();
             res.redirect("/squads");
             return null;
         }, new HandlebarsTemplateEngine());
 
-        get("/heroes/delete", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            heroDao.clearAllHeroes();
-            res.redirect("/heroes");
-            return null;
-        }, new HandlebarsTemplateEngine());
-
         get("/squads/:id", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             int idOfSquadToFind = Integer.parseInt(req.params("id"));
             Squad foundSquad = squadDao.findById(idOfSquadToFind);
             model.put("squad", foundSquad);
@@ -121,7 +102,6 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
         get("/squads/:id/edit", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             model.put("editSquad", true);
             Squad squad = squadDao.findById(Integer.parseInt(req.params("id")));
             model.put("heroes", heroDao.getAll());
@@ -131,7 +111,6 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
         post("/squads/:id/edit", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             int idOfSquadToEdit = Integer.parseInt(req.params("id"));
             String newName = req.queryParams("newName");
             int newMaxSize = Integer.parseInt(req.queryParams("newSize"));
@@ -153,7 +132,6 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
         get("/squads/:id/heroes/new", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             int idOfSquadToDelete = Integer.parseInt(req.params("id"));
             Squad squad = squadDao.findById(idOfSquadToDelete);
             model.put("squad", squad);
@@ -161,7 +139,6 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
         post("/squads/:id/heroes/new", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             int idOfSquad = Integer.parseInt(req.params("id"));
             int age = Integer.parseInt(req.queryParams("age"));
             String name = req.queryParams("name");
@@ -180,11 +157,9 @@ public class App {
                 model.put("squads", squadDao.getAll());
                 return modelAndView(model, "squad-detail.hbs");
             }
-
         }, new HandlebarsTemplateEngine());
 
         get("/squads/:id/heroes/delete", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             int idOfHeroToDelete = Integer.parseInt(req.params("id"));
             System.out.println("Hero ID: " + idOfHeroToDelete);
             Hero hero = heroDao.findById(idOfHeroToDelete);
@@ -194,16 +169,14 @@ public class App {
             return modelAndView(model, "squad-detail.hbs");
         }, new HandlebarsTemplateEngine());
 
-        get("/heroes/:id/delete", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            int idOfHeroToDelete = Integer.parseInt(req.params("id"));
-            heroDao.deleteById(idOfHeroToDelete);
-            res.redirect("/heroes");
-            return null;
+        get("/heroes", (req, res) -> {
+            List<Hero> heroes = heroDao.getAll();
+            List<Squad> squads = squadDao.getAll();
+            model.put("heroes", heroes);
+            return new ModelAndView(model, "all-heroes.hbs");
         }, new HandlebarsTemplateEngine());
 
         get("/heroes/new", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             List<Hero> heroes = heroDao.getAll();
             List<Squad> squads = squadDao.getAll();
             model.put("heroes", heroes);
@@ -211,22 +184,7 @@ public class App {
             return new ModelAndView(model, "hero-form.hbs");
         }, new HandlebarsTemplateEngine());
 
-        get("/heroes/:id", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            int idOfHeroToFind = Integer.parseInt(req.params("id"));
-            Hero foundHero = heroDao.findById(idOfHeroToFind);
-            int idOfSquad = foundHero.getSquadId();
-            Squad squad = squadDao.findById(idOfSquad);
-            model.put("squad", squad);
-            model.put("hero", foundHero);
-            model.put("heroes", heroDao.getAll());
-            String encodedString = Base64.getEncoder().encodeToString(foundHero.getImage()); //encode byteArray to base64 to display in template
-            model.put("encodedString", encodedString);//
-            return new ModelAndView(model, "hero-detail.hbs");
-        }, new HandlebarsTemplateEngine());
-
         post("/heroes/new", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             List<Hero> heroes = heroDao.getAll();
             model.put("heroes", heroes);
             String name = req.queryParams("name");
@@ -246,11 +204,28 @@ public class App {
                 res.redirect("/heroes");
                 return null;
             }
+        }, new HandlebarsTemplateEngine());
 
+        get("/heroes/delete", (req, res) -> {
+            heroDao.clearAllHeroes();
+            res.redirect("/heroes");
+            return null;
+        }, new HandlebarsTemplateEngine());
+
+        get("/heroes/:id", (req, res) -> {
+            int idOfHeroToFind = Integer.parseInt(req.params("id"));
+            Hero foundHero = heroDao.findById(idOfHeroToFind);
+            int idOfSquad = foundHero.getSquadId();
+            Squad squad = squadDao.findById(idOfSquad);
+            model.put("squad", squad);
+            model.put("hero", foundHero);
+            model.put("heroes", heroDao.getAll());
+            String encodedString = Base64.getEncoder().encodeToString(foundHero.getImage()); //encode byteArray to base64 to display in template
+            model.put("encodedString", encodedString);//
+            return new ModelAndView(model, "hero-detail.hbs");
         }, new HandlebarsTemplateEngine());
 
         get("/heroes/:id/edit", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             List<Squad> allSquads = squadDao.getAll();
             model.put("squads", allSquads);
             Hero hero = heroDao.findById(Integer.parseInt(req.params("id")));
@@ -261,7 +236,6 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
         post("/heroes/:id/edit", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             int heroToEditId = Integer.parseInt(req.params("id"));
             String newName = req.queryParams("newName");
             int newSquadId = Integer.parseInt(req.queryParams("newSquadId"));
@@ -271,16 +245,23 @@ public class App {
             heroDao.update(heroToEditId, newName, newAge, newSpecialPower, newWeakness, newSquadId);
             List<Hero> heroes = heroDao.getAll();
             Hero hero = heroDao.findById(heroToEditId);
+            String encodedString = Base64.getEncoder().encodeToString(hero.getImage());
+            hero.setEncodedString(encodedString);
             model.put("squad", squadDao.findById(hero.getSquadId()));
             model.put("heroes", heroes);
             model.put("hero", hero);
-            String encodedString = Base64.getEncoder().encodeToString(hero.getImage());
             model.put("encodedString", encodedString);
             return new ModelAndView(model, "hero-detail.hbs");
         }, new HandlebarsTemplateEngine());
 
+        get("/heroes/:id/delete", (req, res) -> {
+            int idOfHeroToDelete = Integer.parseInt(req.params("id"));
+            heroDao.deleteById(idOfHeroToDelete);
+            res.redirect("/heroes");
+            return null;
+        }, new HandlebarsTemplateEngine());
+
         get("/upload/:id", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             int heroId = Integer.parseInt(req.params("id"));
             model.put("hero", heroDao.findById(heroId));
             return new ModelAndView(model, "upload-image.hbs");
@@ -288,21 +269,21 @@ public class App {
 
         post("/upload/:id", (req, res) -> {
             req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/images"));
-            Map<String, Object> model = new HashMap<>();
             byte[] imageBytes;
             int heroId = Integer.parseInt(req.params("id"));
-            try (InputStream input = req.raw().getPart("image").getInputStream()) {
-                imageBytes = IOUtils.toByteArray(input); //get byteArray from inputStream
-
-            }
+            InputStream input = req.raw().getPart("image").getInputStream();
+            imageBytes = getByteArray(input);
             heroDao.uploadImage(heroId, imageBytes);
             model.put("hero", heroDao.findById(heroId));
             String encodedString = Base64.getEncoder().encodeToString(heroDao.findById(heroId).getImage());
             model.put("encodedString", encodedString);
             model.put("squad",squadDao.findById(heroDao.findById(heroId).getSquadId()));
             return new ModelAndView(model, "hero-detail.hbs");
-
         }, new HandlebarsTemplateEngine());
+    }
+
+    private static byte[] getByteArray(InputStream fs) throws IOException {
+        return IOUtils.toByteArray(fs);
     }
 }
 

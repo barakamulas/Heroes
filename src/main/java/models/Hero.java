@@ -12,6 +12,7 @@ public class Hero {
     private String weakness;
     private int squadId;
     private byte[] image;
+    private String encodedString;
 
     public String getName() {
         return name;
@@ -28,6 +29,18 @@ public class Hero {
         this.weakness = weakness;
         this.squadId = squadId;
         this.image = image;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEncodedString() {
+        return encodedString;
+    }
+
+    public void setEncodedString(String encodedString) {
+        this.encodedString = encodedString;
     }
 
     public int getId() {
