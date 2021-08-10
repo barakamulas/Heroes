@@ -30,7 +30,7 @@ public class App {
         if (processBuilder.environment().get("PORT") != null) {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
-        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+        return 4500; //return default port if heroku-port isn't set (i.e. on localhost)
     }
 
     public static void main(String[] args) throws IOException {
@@ -271,14 +271,22 @@ public class App {
             req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/images"));
             byte[] imageBytes;
             int heroId = Integer.parseInt(req.params("id"));
-            InputStream input = req.raw().getPart("image").getInputStream();
-            imageBytes = getByteArray(input);
-            heroDao.uploadImage(heroId, imageBytes);
-            model.put("hero", heroDao.findById(heroId));
-            String encodedString = Base64.getEncoder().encodeToString(heroDao.findById(heroId).getImage());
-            model.put("encodedString", encodedString);
-            model.put("squad",squadDao.findById(heroDao.findById(heroId).getSquadId()));
-            return new ModelAndView(model, "hero-detail.hbs");
+            long fileSize = req.raw().getPart("image").getSize();
+            if(fileSize <= 30000){ InputStream input = req.raw().getPart("image").getInputStream();
+                imageBytes = getByteArray(input);
+                heroDao.uploadImage(heroId, imageBytes);
+                model.put("hero", heroDao.findById(heroId));
+                String encodedString = Base64.getEncoder().encodeToString(heroDao.findById(heroId).getImage());
+                model.put("encodedString", encodedString);
+                model.put("squad",squadDao.findById(heroDao.findById(heroId).getSquadId()));
+                return new ModelAndView(model, "hero-detail.hbs");
+            }
+            else{
+                model.put("id", heroId);
+                return new ModelAndView(model, "huge-file.hbs");
+            }
+
+
         }, new HandlebarsTemplateEngine());
     }
 

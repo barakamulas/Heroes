@@ -4,9 +4,16 @@ import java.util.List;
 
 public class Test {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
-        System.out.println(solution("13 7"));
+        Book book = new Book();
+        book.setBookName("Java Reference");
+        book.setDescription("will not be saved");
+        book.setCopies(25);
+
+        Book.serialize(book);
+
+        System.out.println(Book.deserialize().getBookName());
 
         //13 7
 

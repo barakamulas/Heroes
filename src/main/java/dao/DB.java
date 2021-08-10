@@ -1,5 +1,4 @@
 package dao;
-
 import org.sql2o.*;
 import java.net.URI;
 import java.net.URISyntaxException;
